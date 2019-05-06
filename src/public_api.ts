@@ -2,4 +2,4 @@
  * Public API Surface of fs-menu
  */
 
-export { FsComponentModule } from './app/fs-component.module';
+export { FsShareModule } from './app/fs-share.module';

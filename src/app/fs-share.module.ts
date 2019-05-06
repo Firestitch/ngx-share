@@ -20,10 +20,10 @@ import { FsComponentComponent } from './components/component';
     // FsComponentService,
   ],
 })
-export class FsComponentModule {
+export class FsShareModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: FsComponentModule,
+      ngModule: FsShareModule,
       // providers: [FsComponentService]
     };
   }
