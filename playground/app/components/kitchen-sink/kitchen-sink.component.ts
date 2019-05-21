@@ -16,4 +16,22 @@ export class KitchenSinkComponent {
               private message: FsMessage) {
     exampleComponent.setConfigureComponent(KitchenSinkConfigureComponent, { config: this.config });
   }
+
+
+  getShareData() {
+  return {
+      text: 'Google It!',
+      url: 'https://google.com',
+      image: null
+    };
+  }
+
+  shareSuccess(response) {
+    alert('share completed');
+  }
+
+  shareFailure(msg) {
+    alert('share failed: ' + msg);
+  }
+
 }

@@ -1,30 +1,30 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FsComponentComponent } from './components/component';
-// import { FsComponentService } from './services';
+import { FsShareDirective } from './directives';
+import { FsShareService } from './services';
 
 @NgModule({
   imports: [
     CommonModule,
   ],
   exports: [
-    FsComponentComponent,
+    FsShareDirective,
   ],
   entryComponents: [
   ],
   declarations: [
-    FsComponentComponent,
+    FsShareDirective,
   ],
   providers: [
-    // FsComponentService,
+    FsShareService,
   ],
 })
 export class FsShareModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: FsShareModule,
-      // providers: [FsComponentService]
+      providers: [FsShareService]
     };
   }
 }
