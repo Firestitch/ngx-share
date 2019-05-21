@@ -2,10 +2,10 @@
 <widget id="com.firestitch.component" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Component</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Component demo
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="support@firestitch.com" href="http://firestitch.com">
+        Firestitch
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
@@ -105,5 +105,6 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <engine name="ios" spec="~4.5.5" />
+    <engine name="android" spec="~7.1.4" />
+    <engine name="ios" spec="~5.0.0" />
 </widget>
