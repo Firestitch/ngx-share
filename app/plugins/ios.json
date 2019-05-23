@@ -45,6 +45,9 @@
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.firestitch.component"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "PACKAGE_NAME": "com.firestitch.component"
     }
   },
   "dependent_plugins": {
@@ -52,6 +55,9 @@
       "PACKAGE_NAME": "com.firestitch.component"
     },
     "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.firestitch.component"
+    },
+    "es6-promise-plugin": {
       "PACKAGE_NAME": "com.firestitch.component"
     }
   }

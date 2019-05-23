@@ -84,4 +84,7 @@
     <preference name="loadUrlTimeoutValue" value="700000" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
+    <feature name="SocialSharing">
+        <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
+    </feature>
 </widget>

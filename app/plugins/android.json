@@ -39,10 +39,17 @@
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.firestitch.component"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "ANDROID_SUPPORT_V4_VERSION": "24.1.1+",
+      "PACKAGE_NAME": "com.firestitch.component"
     }
   },
   "dependent_plugins": {
     "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.firestitch.component"
+    },
+    "es6-promise-plugin": {
       "PACKAGE_NAME": "com.firestitch.component"
     }
   }
