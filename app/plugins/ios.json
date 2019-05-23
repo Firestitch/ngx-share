@@ -42,6 +42,9 @@
     },
     "cordova-plugin-vibration": {
       "PACKAGE_NAME": "com.firestitch.component"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.firestitch.component"
     }
   },
   "dependent_plugins": {
