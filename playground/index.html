@@ -3,7 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title></title>
-  <base href="/">
+  <script type="text/javascript">
+    if (document.location.port == 8080 || document.location.protocol == 'file:') {
+      document.write('<base href="." />');
+      document.write('<script type="text/javascript" src="cordova.js"><\/script>');
+    } else {
+      document.write('<base href="/" />');
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
