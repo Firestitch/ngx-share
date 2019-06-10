@@ -2,7 +2,7 @@
   "name": "@firestitch/share",
   "title": "Share",
   "description": "@firestitch/share",
-  "version": "7.0.0",
+  "version": "7.0.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-share"
@@ -64,13 +64,13 @@
     "@firestitch/api": "^7.0.2",
     "@firestitch/common": "^7.0.2",
     "date-fns": "^2.0.0-alpha.27",
-    "ng2-social-share": "0.0.10"
+    "ng2-social-share": "^0.0.10"
   },
   "engines": {
     "node": ">=6.0.0"
   },
   "peerDependencies": {
-    "@firestitch/api": "^7.0.2",
-    "ng2-social-share": "0.0.10"
+    "@firestitch/api": ">=7.0.2",
+    "ng2-social-share": ">=0.0.10"
   }
 }

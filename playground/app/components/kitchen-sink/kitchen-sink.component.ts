@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { KitchenSinkConfigureComponent } from '../kitchen-sink-configure';
 import { FsExampleComponent } from '@firestitch/example';
 import { FsMessage } from '@firestitch/message';
+import { observable, Observable, of } from 'rxjs';
+import { ShareConfig } from 'src/app/interfaces';
 
 @Component({
   selector: 'kitchen-sink',
@@ -18,20 +20,17 @@ export class KitchenSinkComponent {
   }
 
 
-  getShareData() {
-  return {
-      text: 'Google It!',
+  getShareConfig() {
+    return {
       url: 'https://google.com',
-      image: null
+      title: 'Google It!',
+      success: (response) => {
+        alert('Share complete.');
+      },
+      fail: (msg) => {
+        alert('Share failed - ' + msg);
+      }
     };
-  }
-
-  shareSuccess(response) {
-    alert('share completed');
-  }
-
-  shareFailure(msg) {
-    alert('share failed: ' + msg);
   }
 
 }

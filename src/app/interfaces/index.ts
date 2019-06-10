@@ -1,1 +1,1 @@
-export * from './sharedata.interface';
+export * from './shareconfig.interface';

@@ -1,22 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
-// import { Router } from '@angular/router';
-
-// import { environment } from 'environments/environment';
-// import { FsApi, FsApiConfig } from '@firestitch/api';
-import { remove } from 'lodash';
-
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
-// import { takeUntil } from 'rxjs';
 import { forkJoin } from 'rxjs';
-import { ShareData } from '../interfaces';
-
-// import { ReferralService } from './referral.service';
-// import { AppService } from './app.service';
-// import { MediaService } from './media.service';
-// import { Post, Event, Content } from './../../shared/interfaces';
-
+import { ShareConfig } from '../interfaces';
 import { CeiboShare } from 'ng2-social-share';
 
 
@@ -33,13 +20,7 @@ export class FsShareService implements OnDestroy {
   private onPlatformsChecked$ = new BehaviorSubject<any>(null);
 
 
-  constructor(
-    //private fsApi: FsApi,
-    // private router: Router,
-    // private referralService: ReferralService,
-    // private appService: AppService,
-    // private mediaService: MediaService
-  ) {
+  constructor() {
 
     forkJoin(this.isTwitterAvailable(), this.isFacebookAvailable())
     .subscribe(response => {
@@ -64,16 +45,16 @@ export class FsShareService implements OnDestroy {
   }
 
 
-  any(shareData: ShareData) {
+  any(shareConfig: ShareConfig) {
     const shareObservable = new Observable(observer => {
 
       if (this.isMobile) {
         (<any>window).plugins.socialsharing.shareWithOptions(
           {
-            message: shareData.text,
+            message: shareConfig.title,
             //subject: 'Shared from',
-            files: [shareData.image], // an array of filenames either locally or remotely
-            url: shareData.url,
+            files: [shareConfig.image], // an array of filenames either locally or remotely
+            url: shareConfig.url,
             chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
           },
           response => {
@@ -101,14 +82,14 @@ export class FsShareService implements OnDestroy {
 
 
 
-  facebook(shareData: ShareData) {
+  facebook(shareConfig: ShareConfig) {
     const shareObservable = new Observable(observer => {
 
       if (this.isMobile) {
         (<any>window).plugins.socialsharing.shareViaFacebook(
-          shareData.text,
-          [shareData.image],
-          shareData.url,
+          shareConfig.title,
+          [shareConfig.image],
+          shareConfig.url,
           (response) => {
             // success
             observer.next(response);
@@ -122,7 +103,7 @@ export class FsShareService implements OnDestroy {
       } else {
 
         const Sharer = new CeiboShare();
-        Sharer.facebook = { u: shareData.url };
+        Sharer.facebook = { u: shareConfig.url };
         Sharer.share();
 
         // no callback, so just assume its good
@@ -137,14 +118,14 @@ export class FsShareService implements OnDestroy {
 
 
 
-  twitter(shareData: ShareData) {
+  twitter(shareConfig: ShareConfig) {
     const shareObservable = new Observable(observer => {
       if (this.isMobile) {
 
         (<any>window).plugins.socialsharing.shareViaTwitter(
-          'Message and link via Twitter',
-          null /* img */,
-          'http://www.firestitch.com',
+          shareConfig.title,
+          [shareConfig.image],
+          shareConfig.url,
           function(response) {
             observer.next(response);
           },
@@ -157,8 +138,8 @@ export class FsShareService implements OnDestroy {
 
         const Sharer = new CeiboShare();
         Sharer.twitter = {
-          url: shareData.url,
-          text: shareData.text,
+          url: shareConfig.url,
+          text: shareConfig.title,
           via: '',
           hashtags: ''
         };

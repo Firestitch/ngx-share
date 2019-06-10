@@ -1,8 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FsShareDirective } from './directives';
-import { FsShareService } from './services';
+import { FsShareDirective } from './directives/share.directive';
+import { FsShareService } from './services/share.service';
 
 @NgModule({
   imports: [
