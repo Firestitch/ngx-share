@@ -20,12 +20,17 @@ export class KitchenSinkComponent {
   }
 
 
-  getShareConfig() {
+  getShareConfig(medium) {
     return {
       url: 'https://google.com',
       title: 'Google It!',
       success: (response) => {
-        alert('Share complete.');
+        console.log(response, medium);
+        if (medium == 'copy') {
+          alert('Link copied.');
+        } else {
+          alert('Share complete.');
+        }
       },
       fail: (msg) => {
         alert('Share failed - ' + msg);

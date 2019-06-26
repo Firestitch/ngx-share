@@ -9,7 +9,6 @@ export class FsShareDirective {
 
   @Input('platform') platform: string = 'any';
   @Input('shareConfig') shareConfig: any;
-  @Output() public success = new EventEmitter<any>();
 
   @HostListener('click', ['$event']) onClick($event) {
     this.share();
@@ -42,7 +41,9 @@ export class FsShareDirective {
   private doShare(shareConfig: ShareConfig) {
     this.shareService.share(shareConfig, this.platform)
     .subscribe(response => {
-      this.success.emit(response);
+      if (shareConfig.success) {
+        shareConfig.success(response);
+      }
     });
   }
 

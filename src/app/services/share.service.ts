@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { forkJoin } from 'rxjs';
 import { ShareConfig } from '../interfaces';
 import { CeiboShare } from 'ng2-social-share';
+import { ClipboardService } from 'ngx-clipboard'
 
 
 
@@ -20,7 +21,9 @@ export class FsShareService implements OnDestroy {
   private onPlatformsChecked$ = new BehaviorSubject<any>(null);
 
 
-  constructor() {
+  constructor(
+    private _clipboardService: ClipboardService
+  ) {
 
     forkJoin(this.isTwitterAvailable(), this.isFacebookAvailable())
     .subscribe(response => {
@@ -36,8 +39,17 @@ export class FsShareService implements OnDestroy {
   share(shareData, platform = 'any') {
     if (platform == 'facebook') {
       return this.facebook(shareData);
+
     } else if (platform == 'twitter') {
       return this.twitter(shareData);
+
+    } else if (platform == 'copy') {
+      return new Observable(observer => {
+        this._clipboardService.copyFromContent(shareData.url);
+        observer.next(true);
+        observer.complete();
+      });
+
     } else {
       return this.any(shareData);
     }
@@ -85,7 +97,7 @@ export class FsShareService implements OnDestroy {
   facebook(shareConfig: ShareConfig) {
     const shareObservable = new Observable(observer => {
 
-      if (this.isMobile) {
+      if (this.isMobile && this.facebookAvailable) {
         (<any>window).plugins.socialsharing.shareViaFacebook(
           shareConfig.title,
           [shareConfig.image],
@@ -120,10 +132,10 @@ export class FsShareService implements OnDestroy {
 
   twitter(shareConfig: ShareConfig) {
     const shareObservable = new Observable(observer => {
-      if (this.isMobile) {
+      if (this.isMobile && this.twitterAvailable) {
 
         (<any>window).plugins.socialsharing.shareViaTwitter(
-          shareConfig.title,
+          shareConfig.title + ' ' + shareConfig.url,
           [shareConfig.image],
           shareConfig.url,
           function(response) {
@@ -375,7 +387,7 @@ export class FsShareService implements OnDestroy {
     (<any>window).plugins.socialsharing.shareWithOptions(
       {
         message: message,
-        subject: 'Shared from Sportgo',
+        subject: '',
         files: [image], // an array of filenames either locally or remotely
         url: url,
         chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
