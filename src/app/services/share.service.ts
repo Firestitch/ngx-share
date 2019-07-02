@@ -136,7 +136,7 @@ export class FsShareService implements OnDestroy {
 
         (<any>window).plugins.socialsharing.shareViaTwitter(
           shareConfig.title + (shareConfig.description ? ' - ' + shareConfig.description : ''),
-          [shareConfig.image],
+          null, //[shareConfig.image],
           shareConfig.url,
           function(response) {
             observer.next(response);
