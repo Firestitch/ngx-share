@@ -63,7 +63,7 @@ export class FsShareService implements OnDestroy {
       if (this.isMobile) {
         (<any>window).plugins.socialsharing.shareWithOptions(
           {
-            message: shareConfig.title,
+            message: shareConfig.title + (shareConfig.description ? ' - ' + shareConfig.description : ''),
             //subject: 'Shared from',
             files: [shareConfig.image], // an array of filenames either locally or remotely
             url: shareConfig.url,
