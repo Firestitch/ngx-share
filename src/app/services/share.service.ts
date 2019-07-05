@@ -63,17 +63,19 @@ export class FsShareService implements OnDestroy {
       if (this.isMobile) {
         (<any>window).plugins.socialsharing.shareWithOptions(
           {
-            message: shareConfig.title + (shareConfig.description ? ' - ' + shareConfig.description : ''),
-            //subject: 'Shared from',
-            files: [shareConfig.image], // an array of filenames either locally or remotely
+            // message: shareConfig.title + (shareConfig.description ? ' - ' + shareConfig.description : ''),
+            // subject: 'Shared from',
+            // files: [shareConfig.image], // an array of filenames either locally or remotely
             url: shareConfig.url,
             chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
           },
           response => {
             observer.next(response);
             // success
-            // console.log('Share completed? ' + result.completed); // On Android apps mostly return false even while it's true
-            // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+            // console.log('Share completed? ' + result.completed);
+            // On Android apps mostly return false even while it's true
+            // On Android result.app is currently empty.
+            // On iOS it's empty when sharing is cancelled (result.completed=false)
             // console.log('Shared to app: ' + result.app);
           },
           errormsg => {
@@ -82,8 +84,6 @@ export class FsShareService implements OnDestroy {
         );
 
       } else {
-        //what to do here?  some kinda popup?
-        //observer.next(response);
         observer.error('share bar only avail on mobile');
       }
     });
@@ -99,15 +99,15 @@ export class FsShareService implements OnDestroy {
 
       if (this.isMobile && this.facebookAvailable) {
         (<any>window).plugins.socialsharing.shareViaFacebook(
-          '', //shareConfig.title,
-          null, //[shareConfig.image],
+          '', // shareConfig.title,
+          null, // [shareConfig.image],
           shareConfig.url,
           (response) => {
             // success
             observer.next(response);
           },
           errormsg => {
-            //fail
+            // fail
             observer.error(errormsg);
           }
         );
@@ -136,7 +136,7 @@ export class FsShareService implements OnDestroy {
 
         (<any>window).plugins.socialsharing.shareViaTwitter(
           shareConfig.title + (shareConfig.description ? ' - ' + shareConfig.description : ''),
-          null, //[shareConfig.image],
+          null, // [shareConfig.image],
           shareConfig.url,
           function(response) {
             observer.next(response);
@@ -148,14 +148,20 @@ export class FsShareService implements OnDestroy {
 
       } else {
 
-        const Sharer = new CeiboShare();
-        Sharer.twitter = {
-          url: shareConfig.url,
-          text: shareConfig.title + (shareConfig.description ? ' - ' + shareConfig.description : ''),
-          via: '',
-          hashtags: ''
-        };
-        Sharer.share();
+        if (this.isMobile) {
+          // doing this hacky method because twitter has a bug where they dont show the login form in inappbrowser
+          // TAD-T1393_Share_to_Twiter_on_Mobile_when_no_native_Twitter_app_installed
+          window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(shareConfig.title + (shareConfig.description ? ' - ' + shareConfig.description : ''))+'&url='+encodeURIComponent(shareConfig.url), '_system');
+        } else {
+          const Sharer = new CeiboShare();
+          Sharer.twitter = {
+            url: shareConfig.url,
+            text: shareConfig.title + (shareConfig.description ? ' - ' + shareConfig.description : ''),
+            via: '',
+            hashtags: ''
+          };
+          Sharer.share();
+        }
 
         // no callback, so just assume its good
         observer.next({});
