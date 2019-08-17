@@ -4,7 +4,7 @@ import { Platform } from '../../enums/platform.emun';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Platforms } from '../../consts/platforms.const';
-import { reduce } from 'lodash-es';
+import { transform } from 'lodash-es';
 
 
 @Component({
@@ -27,13 +27,9 @@ export class FsShareButtonComponent implements OnDestroy {
   constructor(
     public shareService: FsShareService
   ) {
-    this.platformNames = reduce(Platforms,(result, value, key) => {
-      if (!result) {
-        result = {};
-      }
+    this.platformNames = transform(Platforms, (result, value) => {
       result[value.value] = value.name;
-      return result;
-    });
+    }, {});
   }
 
   private _share() {
