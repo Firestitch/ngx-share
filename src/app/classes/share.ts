@@ -87,7 +87,7 @@ export abstract class Share {
     });
   }
 
-  protected _cordovaPlatformSupported (platform): Observable<any> {
+  protected _cordovaPlatformSupported(platform): Observable<any> {
     return new Observable((observer) => {
 
       if (!(<any>window).plugins) {

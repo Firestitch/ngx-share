@@ -13,7 +13,8 @@ import { FacebookShare,
         WhatsAppShare,
         TelegramShare,
         TumblrShare,
-        MessengerShare } from '../classes/platforms';
+        MessengerShare,
+        RedditShare } from '../classes/platforms';
 
 
 @Injectable()
@@ -55,6 +56,9 @@ export class FsShareService implements OnDestroy {
 
       case Platform.Tumblr:
           return new TumblrShare(config);
+
+      case Platform.Reddit:
+          return new RedditShare(config);
 
       case Platform.Messenger:
           return new MessengerShare(config);

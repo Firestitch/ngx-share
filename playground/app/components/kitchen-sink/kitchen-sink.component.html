@@ -6,14 +6,16 @@
     *ngFor="let platform of platforms"
     [platform]="platform.value"
     [config]="config"
-    color="primary">Share on {{platform.value}}</button>
+    color="primary">Share on {{platform.value}}
+  </button>
 </div>
 
 <br><br>
 
 <div fxLayout="row wrap" fxLayoutGap="10px">
   <fs-share-button
-    [platform]="platform.value"
+    [platform]="item.value"
     [config]="config"
-    *ngFor="let platform of platforms"></fs-share-button>
+    *ngFor="let item of platforms">
+  </fs-share-button>
 </div>
