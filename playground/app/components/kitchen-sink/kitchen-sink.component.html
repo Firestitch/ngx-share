@@ -1,4 +1,19 @@
-<button fsShare platform="facebook" [shareConfig]="getShareConfig">Share on Facebook</button>
-<button fsShare platform="twitter" [shareConfig]="getShareConfig">Share on Twitter</button>
-<button fsShare platform="copy" [shareConfig]="getShareConfig">Share via Copy</button>
-<button fsShare platform="any" [shareConfig]="getShareConfig">Share on Any</button>
+
+<div fxLayout="row wrap" fxLayoutGap="10px">
+  <button
+    mat-raised-button
+    fsShare
+    *ngFor="let platform of platforms"
+    [platform]="platform.value"
+    [config]="config"
+    color="primary">Share on {{platform.value}}</button>
+</div>
+
+<br><br>
+
+<div fxLayout="row wrap" fxLayoutGap="10px">
+  <fs-share-button
+    [platform]="platform.value"
+    [config]="config"
+    *ngFor="let platform of platforms"></fs-share-button>
+</div>

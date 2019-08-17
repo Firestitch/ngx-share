@@ -3,4 +3,6 @@
  */
 
 export { FsShareModule } from './app/fs-share.module';
-export { ShareConfig } from './app/interfaces/shareconfig.interface';
+export { ShareConfig } from './app/interfaces/share-config.interface';
+export { Platform } from './app/enums/platform.emun';
+export { Platforms } from './app/consts/platforms.const';

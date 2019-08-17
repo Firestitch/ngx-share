@@ -1,0 +1,64 @@
+img {
+  width: 20px;
+}
+
+button {
+  padding: 9px 15px;
+  border-radius: 4px;
+  outline: none;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+
+  &.facebook {
+    background-color: #4267B2;
+  }
+
+  &.twitter {
+    background-color: #00acee;
+  }
+
+  &.linkedin {
+    background-color: #006fa6;
+  }
+
+  &.copy {
+    background-color: #607D8B;
+  }
+
+  &.any {
+    background-color: #F2614A;
+  }
+
+  &.whatsapp {
+    background-color: #25D366;
+  }
+
+  &.telegram {
+    background-color: #0088cc;
+  }
+
+  &.tumblr {
+    background-color: #36465D;
+  }
+
+  &.messenger {
+    background-color: #0080FF;
+  }
+}
+
+.icon {
+
+}
+
+.label {
+  color: #fff;
+  font-size: 15px;
+  margin-left: 9px;
+}
+
+.icon,
+.label {
+  vertical-align: middle;
+}
+

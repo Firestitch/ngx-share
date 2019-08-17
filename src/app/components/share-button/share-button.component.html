@@ -1,0 +1,4 @@
+<button [class]="platform">
+  <img [src]="'/assets/@firestitch/share/' + platform + '.svg'" class="icon">
+  <span class="label" *ngIf="platformNames[platform]">{{platformNames[platform]}}</span>
+</button>

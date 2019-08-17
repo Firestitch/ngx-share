@@ -1,39 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { KitchenSinkConfigureComponent } from '../kitchen-sink-configure';
 import { FsExampleComponent } from '@firestitch/example';
 import { FsMessage } from '@firestitch/message';
-import { observable, Observable, of } from 'rxjs';
 import { ShareConfig } from 'src/app/interfaces';
+import { Platforms } from '@firestitch/package';
 
 @Component({
   selector: 'kitchen-sink',
   templateUrl: 'kitchen-sink.component.html',
   styleUrls: ['kitchen-sink.component.scss']
 })
-export class KitchenSinkComponent {
+export class KitchenSinkComponent implements OnInit {
 
-  public config = {};
+  public config: ShareConfig = {};
+  public platforms = Platforms;
 
   constructor(private exampleComponent: FsExampleComponent,
-              private message: FsMessage) {
+              private _message: FsMessage) {
     exampleComponent.setConfigureComponent(KitchenSinkConfigureComponent, { config: this.config });
   }
 
 
-  getShareConfig(medium) {
-    return {
+  ngOnInit() {
+    this.config = {
       url: 'https://google.com',
-      title: 'Google It!',
-      success: (response) => {
-        console.log(response, medium);
-        if (medium == 'copy') {
-          alert('Link copied.');
+      title: 'Title',
+      description: 'Description',
+      success: (event) => {
+        console.log(event);
+        if (event.platform == 'copy') {
+          this._message.success('Link copied');
         } else {
-          alert('Share complete.');
+          this._message.success(event.platform + ' share complete');
         }
       },
-      fail: (msg) => {
-        alert('Share failed - ' + msg);
+      error: (event) => {
+        this._message.error('Share failed - ' + event.error + ' on the ' + event.platform + ' platform');
       }
     };
   }

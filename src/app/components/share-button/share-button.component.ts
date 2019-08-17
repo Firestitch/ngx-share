@@ -1,14 +1,18 @@
-import { Directive, Input, HostListener, OnDestroy } from '@angular/core';
-import { FsShareService } from '../services/share.service';
-import { Platform } from '../enums/platform.emun';
+import { Directive, Input, HostListener, OnDestroy, Component } from '@angular/core';
+import { FsShareService } from '../../services/share.service';
+import { Platform } from '../../enums/platform.emun';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Platforms } from '../../consts/platforms.const';
+import { chain } from 'lodash-es';
 
 
-@Directive({
-  selector: '[fsShare]',
+@Component({
+  selector: 'fs-share-button',
+  templateUrl: './share-button.component.html',
+  styleUrls: ['./share-button.component.scss']
 })
-export class FsShareDirective implements OnDestroy {
+export class FsShareButtonComponent implements OnDestroy {
 
   @Input() platform: Platform;
   @Input() config: any;
@@ -17,12 +21,17 @@ export class FsShareDirective implements OnDestroy {
     this._share();
   }
 
+  public platformNames = [];
   private _destory$ = new Subject();
 
   constructor(
     public shareService: FsShareService
-  ) {}
-
+  ) {
+    this.platformNames = chain(Platforms)
+                            .keyBy('value')
+                            .mapValues('name')
+                            .value();
+  }
 
   private _share() {
     this.shareService.open(this.platform, this.config)

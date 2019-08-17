@@ -4,6 +4,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 
 import { FsShareDirective } from './directives/share.directive';
 import { FsShareService } from './services/share.service';
+import { FsShareButtonComponent } from './components/share-button/share-button.component';
 
 @NgModule({
   imports: [
@@ -12,11 +13,13 @@ import { FsShareService } from './services/share.service';
   ],
   exports: [
     FsShareDirective,
+    FsShareButtonComponent
   ],
   entryComponents: [
   ],
   declarations: [
     FsShareDirective,
+    FsShareButtonComponent
   ],
   providers: [
     FsShareService,
