@@ -1,1 +1,1 @@
-export * from './share.directive';
+export * from './share-button.component';
