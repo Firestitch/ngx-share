@@ -4,6 +4,7 @@ import { FsExampleComponent } from '@firestitch/example';
 import { FsMessage } from '@firestitch/message';
 import { ShareConfig } from 'src/app/interfaces';
 import { Platforms } from '@firestitch/package';
+import { ShareEvent } from 'src/app/interfaces/share-event.interface';
 
 @Component({
   selector: 'kitchen-sink',
@@ -26,15 +27,15 @@ export class KitchenSinkComponent implements OnInit {
       url: 'https://google.com',
       title: 'Title',
       description: 'Description',
-      success: (event) => {
+      open: (event) => {
         console.log(event);
         if (event.platform == 'copy') {
           this._message.success('Link copied');
         } else {
-          this._message.success(event.platform + ' share complete');
+          this._message.success(event.platform + ' share opened');
         }
       },
-      error: (event) => {
+      error: (event: ShareEvent) => {
         this._message.error('Share failed - ' + event.error + ' on the ' + event.platform + ' platform');
       }
     };

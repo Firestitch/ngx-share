@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Platforms } from '../../consts/platforms.const';
 import { transform } from 'lodash-es';
+import { ShareConfig } from '../../interfaces';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { transform } from 'lodash-es';
 export class FsShareButtonComponent implements OnDestroy {
 
   @Input() platform: Platform;
-  @Input() config: any;
+  @Input() config: ShareConfig;
 
   @HostListener('click', ['$event']) onClick($event) {
     this._share();
@@ -33,6 +34,11 @@ export class FsShareButtonComponent implements OnDestroy {
   }
 
   private _share() {
+
+    if (this.config.open) {
+      this.config.open({ platform: this.platform });
+    }
+
     this.shareService.open(this.platform, this.config)
     .pipe(
       takeUntil(this._destory$)

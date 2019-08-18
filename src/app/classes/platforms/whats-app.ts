@@ -9,7 +9,9 @@ export class WhatsAppShare extends Share {
     description: 'text'
   };
 
-  protected _webUrl = 'https://wa.me/';
+  //protected _webUrl = 'https://wa.me';
+
+  protected _webUrl = 'whatsapp://send';
 
   public buildDecription() {
     return this.config.description + '\n' + this.config.url;

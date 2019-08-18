@@ -1,4 +1,4 @@
-import { ShareResponse } from './share-response.interface';
+import { ShareEvent } from './share-event.interface';
 
 
 export interface ShareConfig {
@@ -6,6 +6,7 @@ export interface ShareConfig {
   title?: string;
   description?: string;
   image?: string;
-  success? (shareResponse: ShareResponse);
-  error?: any;
+  success? (shareEvent: ShareEvent);
+  open? (shareEvent: ShareEvent);
+  error? (shareEvent: ShareEvent);
 }

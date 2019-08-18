@@ -1,5 +1,6 @@
 import { Platform } from '../enums/platform.emun';
 
-export interface ShareResponse {
+export interface ShareEvent {
   platform: Platform;
+  error?: string
 }
