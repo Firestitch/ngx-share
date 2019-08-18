@@ -5,10 +5,11 @@ export class RedditShare extends Share {
 
   public platform = Platform.Reddit
 
-  protected _webParamMap = {
+  protected _webUrl = 'http://www.reddit.com/submit';
+  protected _webUrlParams = {
     url: 'url',
     title: 'title'
   };
-
-  protected _webUrl = 'http://www.reddit.com/submit';
+  protected _appUrl = '';
+  protected _appUrlParams = {};
 }

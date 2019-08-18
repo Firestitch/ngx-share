@@ -6,5 +6,4 @@ export * from './telegram';
 export * from './messenger';
 export * from './tumblr'
 export * from './copy';
-export * from './any';
 export * from './reddit';

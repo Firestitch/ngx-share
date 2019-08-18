@@ -2,12 +2,17 @@ import { Share } from '../share';
 import { Platform } from '../../enums/platform.emun';
 import { Observable } from 'rxjs';
 
+
 export class FacebookShare extends Share {
 
   public platform = Platform.Facebook;
 
-  protected _webParamMap = { url: 'u' };
   protected _webUrl = 'https://www.facebook.com/sharer/sharer.php';
+  protected _webUrlParams = {
+    url: 'u'
+  };
+  protected _appUrl = '';
+  protected _appUrlParams = {};
 
   public open() {
 

@@ -2,13 +2,14 @@ img {
   width: 20px;
 }
 
-button {
+a {
   padding: 9px 15px;
   border-radius: 4px;
   outline: none;
   font-family: inherit;
   border: none;
   cursor: pointer;
+  display: inline-block;
 
   &.facebook {
     background-color: #4267B2;

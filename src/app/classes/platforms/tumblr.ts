@@ -5,10 +5,11 @@ export class TumblrShare extends Share {
 
   public platform = Platform.Tumblr;
 
-  protected _webParamMap = {
+  protected _webUrl = 'http://tumblr.com/widgets/share/tool';
+  protected _webUrlParams = {
     url: 'canonicalUrl',
     description: 'caption'
   };
-
-  protected _webUrl = 'http://tumblr.com/widgets/share/tool';
+  protected _appUrl = '';
+  protected _appUrlParams = {};
 }

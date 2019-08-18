@@ -3,20 +3,26 @@ import { ShareConfig } from '../interfaces';
 import { Observable } from 'rxjs';
 import { forOwn } from 'lodash-es';
 import { Platforms } from '../consts/platforms.const';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 
 export abstract class Share {
 
   public config: ShareConfig;
 
-  constructor(config: ShareConfig) {
+  constructor(config: ShareConfig, deviceDetectorService: DeviceDetectorService) {
     this.config = config;
+    this._deviceDetectorService = deviceDetectorService;
   }
 
-  protected abstract _webParamMap: Object;
-  protected abstract _webUrl: string;
-
   public abstract platform: Platform;
+
+  protected abstract _webUrlParams: Object;
+  protected abstract _webUrl: string;
+  protected abstract _appUrlParams: Object;
+  protected abstract _appUrl: string;
+
+  protected _deviceDetectorService: DeviceDetectorService;
 
   public getPlatformName() {
     const platform = Platforms.find((item) => {
@@ -24,6 +30,14 @@ export abstract class Share {
     });
 
     return platform ? platform.name : '';
+  }
+
+  public appSupported(): boolean {
+    return false;
+  }
+
+  public webSupported(): boolean {
+    return !!this._webUrl;
   }
 
   public buildDecription() {
@@ -34,27 +48,39 @@ export abstract class Share {
     return this.config.title;
   }
 
+  public get appUrl(): URL {
+    return this._createUrl(this._appUrl, this._appUrlParams);
+  }
+
+  public get webUrl(): URL {
+    return this._createUrl(this._webUrl, this._webUrlParams);
+  }
+
+  private _createUrl(u, params): URL {
+    const url = new URL(u);
+
+    const data = {
+      description: this.buildDecription(),
+      title: this.buildTitle(),
+      url: this.config.url
+    };
+
+    forOwn(params, (param, key) => {
+      const value = data[key];
+
+      if (value) {
+        url.searchParams.append(param, value);
+      }
+    });
+
+    return url;
+  }
+
   public open(): Observable<any> {
 
     return new Observable(observer => {
 
-      const url = new URL(this._webUrl);
       const w: Window = window;
-
-      const data = {
-        description: this.buildDecription(),
-        title: this.buildTitle(),
-        url: this.config.url
-      };
-
-      forOwn(this._webParamMap, (param, key) => {
-        const value = data[key];
-
-        if (value) {
-          url.searchParams.append(param, value);
-        }
-      });
-
       const width = 800;
       const height = 500;
 
@@ -71,7 +97,7 @@ export abstract class Share {
         'left=' + left
       ];
 
-      const win = window.open(url.toString(), '_system', options.join(','));
+      const win = window.open(this.webUrl.toString(), '_system', options.join(','));
       const timer = (<any>window).setInterval(() => {
         if (win.closed !== false) {
             window.clearInterval(timer);

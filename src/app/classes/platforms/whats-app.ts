@@ -5,15 +5,18 @@ export class WhatsAppShare extends Share {
 
   public platform = Platform.WhatsApp;
 
-  protected _webParamMap = {
+  protected _webUrl = 'https://wa.me';
+  protected _webUrlParams = {
     description: 'text'
   };
-
-  //protected _webUrl = 'https://wa.me';
-
-  protected _webUrl = 'whatsapp://send';
+  protected _appUrl = 'whatsapp://send';
+  protected _appUrlParams = {};
 
   public buildDecription() {
     return this.config.description + '\n' + this.config.url;
+  }
+
+  public appSupported() {
+    return this._deviceDetectorService.isMobile() || this._deviceDetectorService.isTablet();
   }
 }

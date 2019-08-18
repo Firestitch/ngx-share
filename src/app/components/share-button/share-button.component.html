@@ -1,4 +1,8 @@
-<button [class]="platform">
+<a
+  *ngIf="show"
+  [class]="platform"
+  [href]="href"
+  (click)="click($event)">
   <img [src]="'/assets/@firestitch/share/' + platform + '.svg'" class="icon">
   <span class="label" *ngIf="platformNames[platform]">{{platformNames[platform]}}</span>
-</button>
+</a>

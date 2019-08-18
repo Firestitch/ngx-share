@@ -5,8 +5,18 @@ export class MessengerShare extends Share {
 
   public platform = Platform.Messenger
 
-  protected _webParamMap = {
+  protected _webUrl = '';
+  protected _webUrlParams = {};
+  protected _appUrl = 'fb-messenger://share';
+  protected _appUrlParams = {
     url: 'link'
   };
-  protected _webUrl = 'fb-messenger://share';
+
+  public appSupported() {
+    return this._deviceDetectorService.isMobile() || this._deviceDetectorService.isTablet();
+  }
+
+  public webSupported() {
+    return false;
+  }
 }

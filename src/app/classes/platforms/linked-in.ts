@@ -6,10 +6,12 @@ export class LinkedInShare extends Share {
 
   public platform = Platform.LinkedIn;
 
-  protected _webParamMap = {
+  protected _webUrl = 'http://www.linkedin.com/shareArticle';
+  protected _webUrlParams = {
     url: 'url',
     title: 'title',
     description: 'summary'
   };
-  protected _webUrl = 'http://www.linkedin.com/shareArticle';
+  protected _appUrl = '';
+  protected _appUrlParams = {};
 }

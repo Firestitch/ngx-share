@@ -6,12 +6,13 @@ export class TwitterShare extends Share {
 
   public platform = Platform.Twitter;
 
-  protected _webParamMap = {
+  protected _webUrl = 'https://twitter.com/intent/tweet';
+  protected _webUrlParams = {
     url: 'url',
     description: 'text'
   };
-
-  protected _webUrl = 'https://twitter.com/intent/tweet';
+  protected _appUrl = '';
+  protected _appUrlParams = {};
 
   public open() {
 

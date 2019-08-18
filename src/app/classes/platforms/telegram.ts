@@ -5,9 +5,11 @@ export class TelegramShare extends Share {
 
   public platform = Platform.Telegram
 
-  protected _webParamMap = {
+  protected _webUrl = 'https://t.me/share/url';
+  protected _webUrlParams = {
     url: 'url',
     description: 'text'
   };
-  protected _webUrl = 'https://t.me/share/url';
+  protected _appUrl = '';
+  protected _appUrlParams = {};
 }

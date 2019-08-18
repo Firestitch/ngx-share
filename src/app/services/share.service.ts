@@ -8,13 +8,13 @@ import { Platform } from '../enums/platform.emun';
 import { FacebookShare,
         TwitterShare,
         CopyShare,
-        AnyShare,
         LinkedInShare,
         WhatsAppShare,
         TelegramShare,
         TumblrShare,
         MessengerShare,
         RedditShare } from '../classes/platforms';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 
 @Injectable()
@@ -30,7 +30,8 @@ export class FsShareService implements OnDestroy {
 
 
   constructor(
-    private _clipboardService: ClipboardService
+    private _clipboardService: ClipboardService,
+    private _device: DeviceDetectorService
   ) {}
 
   open(platform: Platform, config: ShareConfig): Observable<any> {
@@ -38,38 +39,40 @@ export class FsShareService implements OnDestroy {
   }
 
   public createShare(platform: Platform, config: ShareConfig) {
+
     switch (platform) {
       case Platform.Facebook:
-        return new FacebookShare(config);
+        return new FacebookShare(config, this._device);
 
       case Platform.Twitter:
-          return new TwitterShare(config);
+          return new TwitterShare(config, this._device);
 
       case Platform.LinkedIn:
-        return new LinkedInShare(config);
+        return new LinkedInShare(config, this._device);
 
       case Platform.WhatsApp:
-        return new WhatsAppShare(config);
+        return new WhatsAppShare(config, this._device);
 
       case Platform.Telegram:
-        return new TelegramShare(config);
+        return new TelegramShare(config, this._device);
 
       case Platform.Tumblr:
-          return new TumblrShare(config);
+          return new TumblrShare(config, this._device);
 
       case Platform.Reddit:
-          return new RedditShare(config);
+          return new RedditShare(config, this._device);
 
       case Platform.Messenger:
-          return new MessengerShare(config);
+          return new MessengerShare(config, this._device);
 
       case Platform.Copy:
-          return new CopyShare(config, this._clipboardService);
+          return new CopyShare(config, this._device, this._clipboardService);
 
-      case Platform.Any:
-        return new AnyShare(config);
+      // case Platform.Any:
+      //   return new AnyShare(config);
 
       default:
+        debugger;
         throw 'Invalid platform';
     }
   }
