@@ -38,7 +38,17 @@ export class FsShareComponent implements OnDestroy, OnInit {
   public click(event: KeyboardEvent) {
 
     if (this._share.appSupported()) {
+      event.preventDefault();
+      return this._redirect();
+    }
 
+    if (this._share.webSupported()) {
+      event.preventDefault();
+      return this._open();
+    }
+  }
+
+  private _redirect() {
     const newWindow = window.open('', 'Share', 'width=300,height=300')
     const url = this._share.appUrl.toString();
 
@@ -49,6 +59,7 @@ export class FsShareComponent implements OnDestroy, OnInit {
         <meta http-equiv="refresh" content="0;url=` + url + `">
       </head>
       <body></body>
+      <script>setTimeout(function() { window.close() }, 1000);</script>
     </html>`
 
     newWindow .document.open();
@@ -60,26 +71,6 @@ export class FsShareComponent implements OnDestroy, OnInit {
         newWindow.close();
       }
     }, 10000);
-
-
-      // const iframe = document.createElement('iframe');
-      // iframe.setAttribute('src', 'about:blank');
-      // iframe.setAttribute('name', `fs-share-iframe`);
-      // iframe.setAttribute('id', `fs-share-iframe`);
-      // iframe.setAttribute('class', 'fs-share-iframe');
-      // //iframe.setAttribute('style', 'display: none;');
-
-      // document.body.appendChild(iframe);
-
-      //iframe.contentWindow.document.write();
-
-      return;
-    }
-
-    if (this._share.webSupported()) {
-      event.preventDefault();
-      this._open();
-    }
   }
 
   public ngOnInit() {
