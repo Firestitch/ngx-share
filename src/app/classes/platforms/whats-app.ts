@@ -1,6 +1,6 @@
 import { Share } from '../share';
 import { Platform } from '../../enums/platform.emun';
-import { Method } from 'src/app/enums/method.enum';
+import { Method } from '../../enums/method.enum';
 
 export class WhatsAppShare extends Share {
 

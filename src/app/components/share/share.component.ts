@@ -43,17 +43,14 @@ export class FsShareComponent implements OnDestroy, OnInit {
     if (this.platform === Platform.Copy) {
       this._clipboardService.copyFromContent(this.config.url);
 
-    } else {
+    } else if (this._share.getMethod() === Method.MetaRefesh) {
 
-      if (this._share.getMethod() === Method.MetaRefesh) {
-        event.preventDefault();
-        return this._metaRefresh();
-      }
+      event.preventDefault();
+      this._metaRefresh();
+    } else if (this._share.getMethod() === Method.Dialog) {
 
-      if (this._share.getMethod() === Method.Dialog) {
-        event.preventDefault();
-        return this._dialog();
-      }
+      event.preventDefault();
+      this._dialog();
     }
 
     if (this.config.open) {

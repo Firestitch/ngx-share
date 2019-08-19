@@ -15,6 +15,8 @@ import { FacebookShare,
         MessengerShare,
         RedditShare } from '../classes/platforms';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { Platforms } from '../consts/platforms.const';
+import { transform } from 'lodash-es';
 
 
 @Injectable()
@@ -27,7 +29,7 @@ export class FsShareService implements OnDestroy {
 
   private onDestroy$ = new Subject();
   private onPlatformsChecked$ = new BehaviorSubject<any>(null);
-
+  private _platformNames;
 
   constructor(
     private _clipboardService: ClipboardService,
@@ -74,6 +76,17 @@ export class FsShareService implements OnDestroy {
       default:
         throw 'Invalid platform';
     }
+  }
+
+  public get platformNames() {
+
+    if (!this._platformNames) {
+      this._platformNames = transform(Platforms, (result, value) => {
+        result[value.value] = value.name;
+      }, {});
+    }
+
+    return this._platformNames;
   }
 
   ngOnDestroy() {

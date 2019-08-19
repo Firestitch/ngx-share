@@ -3,6 +3,6 @@
   [platform]="platform">
   <div class="container" [ngClass]="platform">
     <img [src]="'/assets/@firestitch/share/' + platform + '.svg'" class="icon">
-    <span class="label" *ngIf="platformNames[platform]">{{platformNames[platform]}}</span>
+    <span class="label" *ngIf="showLabels && platformNames[platform]">{{platformNames[platform]}}</span>
  </div>
 </fs-share>
