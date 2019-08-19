@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { forOwn } from 'lodash-es';
 import { Platforms } from '../consts/platforms.const';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { Method } from '../enums/method.enum';
 
 
 export abstract class Share {
@@ -17,10 +18,8 @@ export abstract class Share {
 
   public abstract platform: Platform;
 
-  protected abstract _webUrlParams: Object;
-  protected abstract _webUrl: string;
-  protected abstract _appUrlParams: Object;
-  protected abstract _appUrl: string;
+  public abstract createUrl(): URL;
+  public abstract getMethod(): Method;
 
   protected _deviceDetectorService: DeviceDetectorService;
 
@@ -36,10 +35,6 @@ export abstract class Share {
     return false;
   }
 
-  public webSupported(): boolean {
-    return !!this._webUrl;
-  }
-
   public buildDecription() {
     return this.config.description;
   }
@@ -48,16 +43,8 @@ export abstract class Share {
     return this.config.title;
   }
 
-  public get appUrl(): URL {
-    return this._createUrl(this._appUrl, this._appUrlParams);
-  }
-
-  public get webUrl(): URL {
-    return this._createUrl(this._webUrl, this._webUrlParams);
-  }
-
-  private _createUrl(u, params): URL {
-    const url = new URL(u);
+  protected _createUrl(shareUrl, params): URL {
+    const url = new URL(shareUrl);
 
     const data = {
       description: this.buildDecription(),
@@ -97,7 +84,7 @@ export abstract class Share {
         'left=' + left
       ];
 
-      const win = window.open(this.webUrl.toString(), '_system', options.join(','));
+      const win = window.open(this.createUrl().toString(), '_system', options.join(','));
       const timer = (<any>window).setInterval(() => {
         if (win.closed !== false) {
             window.clearInterval(timer);

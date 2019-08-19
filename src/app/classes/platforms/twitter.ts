@@ -1,18 +1,25 @@
 import { Share } from '../share';
 import { Platform } from '../../enums/platform.emun';
 import { Observable } from 'rxjs';
+import { Method } from '../../enums/method.enum';
 
 export class TwitterShare extends Share {
 
   public platform = Platform.Twitter;
 
-  protected _webUrl = 'https://twitter.com/intent/tweet';
-  protected _webUrlParams = {
-    url: 'url',
-    description: 'text'
-  };
-  protected _appUrl = '';
-  protected _appUrlParams = {};
+  public createUrl() {
+    const url = 'https://twitter.com/intent/tweet';
+    const params = {
+      url: 'url',
+      description: 'text'
+    };
+
+    return this._createUrl(url, params);
+  }
+
+  public getMethod() {
+    return Method.Dialog;
+  }
 
   public open() {
 

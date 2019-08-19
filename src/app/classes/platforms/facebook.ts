@@ -1,18 +1,26 @@
 import { Share } from '../share';
 import { Platform } from '../../enums/platform.emun';
 import { Observable } from 'rxjs';
+import { Method } from '../../enums/method.enum';
 
 
 export class FacebookShare extends Share {
 
   public platform = Platform.Facebook;
 
-  protected _webUrl = 'https://www.facebook.com/sharer/sharer.php';
-  protected _webUrlParams = {
-    url: 'u'
-  };
-  protected _appUrl = '';
-  protected _appUrlParams = {};
+  public createUrl() {
+    const url = 'https://www.facebook.com/sharer/sharer.php';
+    const params = {
+      url: 'u'
+    };
+
+    return this._createUrl(url, params);
+  }
+
+  public getMethod() {
+    return Method.Dialog;
+  }
+
 
   public open() {
 

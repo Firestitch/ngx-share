@@ -9,10 +9,15 @@ export class CopyShare extends Share {
 
   public platform = Platform.Copy;
 
-  protected _webUrl = '';
-  protected _webUrlParams = {};
-  protected _appUrl = '';
-  protected _appUrlParams = {};
+  public createUrl() {
+    return new URL('');
+  }
+
+  public getMethod() {
+    return null;
+  }
+
+
   protected _clipboardService: ClipboardService;
 
   constructor(config: ShareConfig, deviceDetectorService: DeviceDetectorService, clipboardService: ClipboardService) {

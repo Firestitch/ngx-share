@@ -1,17 +1,24 @@
 import { Share } from '../share';
 import { Platform } from '../../enums/platform.emun';
-import { Observable } from 'rxjs';
+import { Method } from '../../enums/method.enum';
 
 export class LinkedInShare extends Share {
 
   public platform = Platform.LinkedIn;
 
-  protected _webUrl = 'http://www.linkedin.com/shareArticle';
-  protected _webUrlParams = {
-    url: 'url',
-    title: 'title',
-    description: 'summary'
-  };
-  protected _appUrl = '';
-  protected _appUrlParams = {};
+  public createUrl() {
+    const url = 'http://www.linkedin.com/shareArticle';
+    const params = {
+      url: 'url',
+      title: 'title',
+      description: 'summary'
+    };
+
+    return this._createUrl(url, params);
+  }
+
+  public getMethod() {
+    return Method.Dialog;
+  }
+
 }

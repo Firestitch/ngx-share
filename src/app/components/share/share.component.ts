@@ -8,6 +8,7 @@ import { transform } from 'lodash-es';
 import { ShareConfig } from '../../interfaces';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Share } from '../../classes/share';
+import { Method } from '../../enums/method.enum';
 
 
 @Component({
@@ -37,20 +38,20 @@ export class FsShareComponent implements OnDestroy, OnInit {
 
   public click(event: KeyboardEvent) {
 
-    if (this._share.appSupported()) {
+    if (this._share.getMethod() === Method.MetaRefesh) {
       event.preventDefault();
-      return this._redirect();
+      return this._metaRefresh();
     }
 
-    if (this._share.webSupported()) {
+    if (this._share.getMethod() === Method.Dialog) {
       event.preventDefault();
-      return this._open();
+      return this._dialog();
     }
   }
 
-  private _redirect() {
+  private _metaRefresh() {
     const newWindow = window.open('', 'Share', 'width=300,height=300')
-    const url = this._share.appUrl.toString();
+    const url = this._share.createUrl().toString();
 
     //const url = 'http://google.com';
     const html = `
@@ -76,13 +77,13 @@ export class FsShareComponent implements OnDestroy, OnInit {
   public ngOnInit() {
 
     this._share = this._shareService.createShare(this.platform, this.config);
-    this.show = this._share.appSupported() || this._share.webSupported();
-    if (this._share.appSupported()) {
-      //this.href = this._sanitizer.bypassSecurityTrustUrl(this._share.appUrl.toString());
+    //this.show = this._share.appSupported() || this._share.webSupported();
+    if (this._share.getMethod() === Method.Href) {
+      this.href = this._sanitizer.bypassSecurityTrustUrl(this._share.createUrl.toString());
     }
   }
 
-  private _open() {
+  private _dialog() {
 
     if (this.config.open) {
       this.config.open({ platform: this.platform });
