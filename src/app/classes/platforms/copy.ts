@@ -18,19 +18,14 @@ export class CopyShare extends Share {
   }
 
 
-  protected _clipboardService: ClipboardService;
+  // protected _clipboardService: ClipboardService;
 
-  constructor(config: ShareConfig, deviceDetectorService: DeviceDetectorService, clipboardService: ClipboardService) {
-    super(config, deviceDetectorService);
-    this._clipboardService = clipboardService;
-  }
+  // constructor(config: ShareConfig, deviceDetectorService: DeviceDetectorService, clipboardService: ClipboardService) {
+  //   super(config, deviceDetectorService);
+  //   this._clipboardService = clipboardService;
+  // }
 
-  public open(): Observable<any> {
-
-    return new Observable(observer => {
-      this._clipboardService.copyFromContent(this.config.url);
-      observer.next(true);
-      observer.complete();
-    });
-  }
+  // public copy() {
+  //   this._clipboardService.copyFromContent(this.config.url);
+  // }
 }

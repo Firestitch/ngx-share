@@ -9,6 +9,7 @@ import { ShareConfig } from '../../interfaces';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Share } from '../../classes/share';
 import { Method } from '../../enums/method.enum';
+import { ClipboardService } from 'ngx-clipboard';
 
 
 @Component({
@@ -28,7 +29,8 @@ export class FsShareComponent implements OnDestroy, OnInit {
 
   constructor(
     private _shareService: FsShareService,
-    private _sanitizer: DomSanitizer
+    private _sanitizer: DomSanitizer,
+    private _clipboardService: ClipboardService,
   ) {
     this.platformNames = transform(Platforms, (result, value) => {
       result[value.value] = value.name;
@@ -38,22 +40,30 @@ export class FsShareComponent implements OnDestroy, OnInit {
 
   public click(event: KeyboardEvent) {
 
-    if (this._share.getMethod() === Method.MetaRefesh) {
-      event.preventDefault();
-      return this._metaRefresh();
+    if (this.platform === Platform.Copy) {
+      this._clipboardService.copyFromContent(this.config.url);
+
+    } else {
+
+      if (this._share.getMethod() === Method.MetaRefesh) {
+        event.preventDefault();
+        return this._metaRefresh();
+      }
+
+      if (this._share.getMethod() === Method.Dialog) {
+        event.preventDefault();
+        return this._dialog();
+      }
     }
 
-    if (this._share.getMethod() === Method.Dialog) {
-      event.preventDefault();
-      return this._dialog();
+    if (this.config.open) {
+      this.config.open({ platform: this.platform });
     }
   }
 
   private _metaRefresh() {
-    const newWindow = window.open('', 'Share', 'width=300,height=300')
+    const newWindow = window.open('', 'Share', 'width=1,height=1')
     const url = this._share.createUrl().toString();
-
-    //const url = 'http://google.com';
     const html = `
     <html>
       <head>
@@ -71,7 +81,7 @@ export class FsShareComponent implements OnDestroy, OnInit {
       if (newWindow) {
         newWindow.close();
       }
-    }, 10000);
+    }, 500);
   }
 
   public ngOnInit() {
@@ -79,15 +89,11 @@ export class FsShareComponent implements OnDestroy, OnInit {
     this._share = this._shareService.createShare(this.platform, this.config);
     //this.show = this._share.appSupported() || this._share.webSupported();
     if (this._share.getMethod() === Method.Href) {
-      this.href = this._sanitizer.bypassSecurityTrustUrl(this._share.createUrl.toString());
+      this.href = this._sanitizer.bypassSecurityTrustUrl(this._share.createUrl().toString());
     }
   }
 
   private _dialog() {
-
-    if (this.config.open) {
-      this.config.open({ platform: this.platform });
-    }
 
     this._share.open()
     .pipe(

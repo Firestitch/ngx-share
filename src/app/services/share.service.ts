@@ -66,7 +66,7 @@ export class FsShareService implements OnDestroy {
           return new MessengerShare(config, this._device);
 
       case Platform.Copy:
-          return new CopyShare(config, this._device, this._clipboardService);
+          return new CopyShare(config, this._device);
 
       // case Platform.Any:
       //   return new AnyShare(config);

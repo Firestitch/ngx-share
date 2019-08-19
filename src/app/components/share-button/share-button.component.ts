@@ -27,6 +27,5 @@ export class FsShareButtonComponent {
     this.platformNames = transform(Platforms, (result, value) => {
       result[value.value] = value.name;
     }, {});
-    //this.href = this._sanitizer.bypassSecurityTrustUrl('javascript:;');/
   }
 }
