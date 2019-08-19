@@ -37,6 +37,28 @@ export class FsShareComponent implements OnDestroy, OnInit {
 
   public click(event: KeyboardEvent) {
 
+    if (this._share.appSupported()) {
+
+      const iframe = document.createElement('iframe');
+      iframe.setAttribute('src', 'about:blank');
+      iframe.setAttribute('name', `fs-share-iframe`);
+      iframe.setAttribute('id', `fs-share-iframe`);
+      iframe.setAttribute('class', 'fs-share-iframe');
+      //iframe.setAttribute('style', 'display: none;');
+
+      document.body.appendChild(iframe);
+
+      iframe.contentWindow.document.write(`
+      <html>
+        <head>
+          <meta http-equiv="refresh" content="0;url=` + this._share.appUrl.toString() + `">
+        </head>
+        <body></body>
+      </html>`);
+
+      return;
+    }
+
     if (this._share.webSupported()) {
       event.preventDefault();
       this._open();
@@ -48,7 +70,7 @@ export class FsShareComponent implements OnDestroy, OnInit {
     this._share = this._shareService.createShare(this.platform, this.config);
     this.show = this._share.appSupported() || this._share.webSupported();
     if (this._share.appSupported()) {
-      this.href = this._sanitizer.bypassSecurityTrustUrl(this._share.appUrl.toString());
+      //this.href = this._sanitizer.bypassSecurityTrustUrl(this._share.appUrl.toString());
     }
   }
 

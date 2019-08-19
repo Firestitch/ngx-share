@@ -64,9 +64,7 @@ export abstract class Share {
       title: this.buildTitle(),
       url: this.config.url
     };
-if(this.platform === Platform.WhatsApp) {
-  debugger;
-}
+
     forOwn(params, (param, key) => {
       const value = data[key];
 
