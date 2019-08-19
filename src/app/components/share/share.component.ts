@@ -39,22 +39,39 @@ export class FsShareComponent implements OnDestroy, OnInit {
 
     if (this._share.appSupported()) {
 
-      const iframe = document.createElement('iframe');
-      iframe.setAttribute('src', 'about:blank');
-      iframe.setAttribute('name', `fs-share-iframe`);
-      iframe.setAttribute('id', `fs-share-iframe`);
-      iframe.setAttribute('class', 'fs-share-iframe');
-      //iframe.setAttribute('style', 'display: none;');
+    const newWindow = window.open('', 'Share', 'width=300,height=300')
+    const url = this._share.appUrl.toString();
 
-      document.body.appendChild(iframe);
+    //const url = 'http://google.com';
+    const html = `
+    <html>
+      <head>
+        <meta http-equiv="refresh" content="0;url=` + url + `">
+      </head>
+      <body></body>
+    </html>`
 
-      iframe.contentWindow.document.write(`
-      <html>
-        <head>
-          <meta http-equiv="refresh" content="0;url=` + this._share.appUrl.toString() + `">
-        </head>
-        <body></body>
-      </html>`);
+    newWindow .document.open();
+    newWindow .document.write(html)
+    newWindow .document.close();
+
+    setTimeout(() => {
+      if (newWindow) {
+        newWindow.close();
+      }
+    }, 10000);
+
+
+      // const iframe = document.createElement('iframe');
+      // iframe.setAttribute('src', 'about:blank');
+      // iframe.setAttribute('name', `fs-share-iframe`);
+      // iframe.setAttribute('id', `fs-share-iframe`);
+      // iframe.setAttribute('class', 'fs-share-iframe');
+      // //iframe.setAttribute('style', 'display: none;');
+
+      // document.body.appendChild(iframe);
+
+      //iframe.contentWindow.document.write();
 
       return;
     }
