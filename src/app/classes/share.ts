@@ -64,7 +64,9 @@ export abstract class Share {
       title: this.buildTitle(),
       url: this.config.url
     };
-
+if(this.platform === Platform.WhatsApp) {
+  debugger;
+}
     forOwn(params, (param, key) => {
       const value = data[key];
 
@@ -106,7 +108,7 @@ export abstract class Share {
         }
       }, 200);
 
-      if (win.focus) {
+      if (win && win.focus) {
         win.focus();
       }
 

@@ -10,7 +10,9 @@ export class WhatsAppShare extends Share {
     description: 'text'
   };
   protected _appUrl = 'whatsapp://send';
-  protected _appUrlParams = {};
+  protected _appUrlParams = {
+    description: 'text'
+  };
 
   public buildDecription() {
     return this.config.description + '\n' + this.config.url;

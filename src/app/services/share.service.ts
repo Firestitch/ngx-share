@@ -72,7 +72,6 @@ export class FsShareService implements OnDestroy {
       //   return new AnyShare(config);
 
       default:
-        debugger;
         throw 'Invalid platform';
     }
   }

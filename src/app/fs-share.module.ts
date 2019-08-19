@@ -6,6 +6,7 @@ import { FsShareDirective } from './directives/share.directive';
 import { FsShareService } from './services/share.service';
 import { FsShareButtonComponent } from './components/share-button/share-button.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { FsShareComponent } from './components/share/share.component';
 
 
 @NgModule({
@@ -15,13 +16,13 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
     DeviceDetectorModule
   ],
   exports: [
-    FsShareDirective,
+    FsShareComponent,
     FsShareButtonComponent
   ],
   entryComponents: [
   ],
   declarations: [
-    FsShareDirective,
+    FsShareComponent,
     FsShareButtonComponent
   ],
   providers: [

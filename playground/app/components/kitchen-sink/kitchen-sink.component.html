@@ -1,13 +1,15 @@
 
 <div fxLayout="row wrap" fxLayoutGap="10px">
-  <button
-    mat-raised-button
-    fsShare
+  <fs-share
     *ngFor="let platform of platforms"
     [platform]="platform.value"
-    [config]="config"
-    color="primary">Share on {{platform.value}}
-  </button>
+    [config]="config">
+      <button
+        mat-raised-button
+        color="primary">
+          Share on {{platform.value}}
+      </button>
+  </fs-share>
 </div>
 
 <br><br>
