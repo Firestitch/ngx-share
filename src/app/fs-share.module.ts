@@ -23,10 +23,7 @@ import { FsShareComponent } from './components/share/share.component';
   declarations: [
     FsShareComponent,
     FsShareButtonComponent
-  ],
-  providers: [
-    FsShareService,
-  ],
+  ]
 })
 export class FsShareModule {
   static forRoot(): ModuleWithProviders {

@@ -27,11 +27,11 @@ const routes: Routes = [
   bootstrap: [ AppComponent ],
   imports: [
     BrowserModule,
-    FsShareModule,
     BrowserAnimationsModule,
     AppMaterialModule,
     FormsModule,
     FsLabelModule,
+    FsShareModule.forRoot(),
     FsExampleModule.forRoot(),
     FsMessageModule.forRoot(),
     ToastrModule.forRoot({ preventDuplicates: true }),

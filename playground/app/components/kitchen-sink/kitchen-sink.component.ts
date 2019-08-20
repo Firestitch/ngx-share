@@ -27,18 +27,20 @@ export class KitchenSinkComponent implements OnInit {
       url: 'https://google.com',
       title: 'Title',
       description: 'Description',
-      open: (event) => {
-        console.log(event);
-        if (event.platform == 'copy') {
-          this._message.success('Link copied');
-        } else {
-          this._message.success(event.platform + ' share opened');
-        }
-      },
+
       error: (event: ShareEvent) => {
         this._message.error('Share failed - ' + event.error + ' on the ' + event.platform + ' platform');
       }
     };
+  }
+
+  open(event) {
+      console.log(event);
+      if (event.platform == 'copy') {
+        this._message.success('Link copied');
+      } else {
+        this._message.success(event.platform + ' share opened');
+      }
   }
 
 }

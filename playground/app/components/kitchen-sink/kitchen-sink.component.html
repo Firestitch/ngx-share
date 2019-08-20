@@ -3,7 +3,10 @@
   <fs-share
     *ngFor="let platform of platforms"
     [platform]="platform.value"
-    [config]="config">
+    [title]="config.title"
+    [url]="config.url"
+    [description]="config.description"
+    (open)="open($event)">
       <button
         mat-raised-button
         color="primary">
@@ -17,7 +20,10 @@
 <div fxLayout="row wrap" fxLayoutGap="10px">
   <fs-share-button
     [platform]="item.value"
-    [config]="config"
+    [title]="config.title"
+    [url]="config.url"
+    [description]="config.description"
+    (open)="open($event)"
     *ngFor="let item of platforms">
   </fs-share-button>
 </div>

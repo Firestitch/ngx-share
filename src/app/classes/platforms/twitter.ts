@@ -21,34 +21,34 @@ export class TwitterShare extends Share {
     return Method.Dialog;
   }
 
-  public open() {
+  // public open() {
 
-    return new Observable((observer) => {
+  //   return new Observable((observer) => {
 
-      this._cordovaPlatformSupported(Platform.Twitter)
-      .subscribe(() => {
+  //     this._cordovaPlatformSupported(Platform.Twitter)
+  //     .subscribe(() => {
 
-        (<any>window).plugins.socialsharing.shareViaTwitter(
-          this.config.title + (this.config.description ? ' - ' + this.config.description : ''),
-          null,
-          this.config.url,
-          function(response) {
-            observer.next(response);
-            observer.complete();
-          },
-          function(errormsg) {
-            observer.error(errormsg);
-          }
-        );
+  //       (<any>window).plugins.socialsharing.shareViaTwitter(
+  //         this.config.title + (this.config.description ? ' - ' + this.config.description : ''),
+  //         null,
+  //         this.config.url,
+  //         function(response) {
+  //           observer.next(response);
+  //           observer.complete();
+  //         },
+  //         function(errormsg) {
+  //           observer.error(errormsg);
+  //         }
+  //       );
 
-      }, () => {
+  //     }, () => {
 
-        super.open()
-        .subscribe((response) => {
-          observer.next(response);
-          observer.complete();
-        });
-      });
-    });
-  }
+  //       super.open()
+  //       .subscribe((response) => {
+  //         observer.next(response);
+  //         observer.complete();
+  //       });
+  //     });
+  //   });
+  // }
 }
