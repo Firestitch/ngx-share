@@ -4,8 +4,8 @@
   [description]="description"
   (open)="open.emit($event)"
   [platform]="platform">
-  <div class="container" [ngClass]="platform">
-    <img [src]="iconUrl" *ngIf="showIcon" class="icon">
-    <span class="label" *ngIf="showLabel && platformNames[platform]">{{platformNames[platform]}}</span>
- </div>
+  <span class="button-container" [ngClass]="platform">
+    <img [src]="iconUrl" *ngIf="showIcon" class="icon" [ngStyle]="iconStyles">
+    <span class="label" *ngIf="showLabel && platformNames[platform]" [ngStyle]="labelStyles">{{platformNames[platform]}}</span>
+ </span>
 </fs-share>

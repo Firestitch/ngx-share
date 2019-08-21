@@ -2,7 +2,7 @@
   "name": "@firestitch/share",
   "title": "Share",
   "description": "@firestitch/share",
-  "version": "7.1.9",
+  "version": "7.1.11",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-share"

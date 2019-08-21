@@ -1,5 +1,5 @@
 
-<div fxLayout="row wrap" fxLayoutGap="10px">
+<div fxLayout="row wrap">
   <fs-share
     *ngFor="let platform of platforms"
     [platform]="platform.value"
@@ -17,11 +17,12 @@
 
 <br><br>
 
-<div fxLayout="row wrap" fxLayoutGap="10px">
+<div fxLayout="row wrap">
   <fs-share-button
     [platform]="item.value"
     [title]="config.title"
     [url]="config.url"
+    [size]="120"
     [description]="config.description"
     (open)="open($event)"
     *ngFor="let item of platforms">

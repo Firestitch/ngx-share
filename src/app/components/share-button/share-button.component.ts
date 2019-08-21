@@ -19,9 +19,25 @@ export class FsShareButtonComponent implements OnInit {
   @Input() showIcon = true;
   @Input() iconUrl = '';
 
+  @Input('iconHeight') set setIconHeight(value: number) {
+    if (value) {
+      this.iconStyles.height = value + 'px';
+    }
+  }
+
+  @Input('size') set setSize(value: number) {
+    if (value) {
+      const percent = (value / 100);
+      this.iconStyles.height = (percent * 20) + 'px';
+      this.labelStyles.fontSize = value + '%';
+    }
+  }
+
   @Output() open = new EventEmitter<ShareEvent>();
 
   public platformNames = [];
+  public iconStyles: any = {};
+  public labelStyles: any = {};
 
   constructor(private _shareService: FsShareService) {
     this.platformNames = this._shareService.platformNames;

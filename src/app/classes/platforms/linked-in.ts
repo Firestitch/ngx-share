@@ -7,7 +7,7 @@ export class LinkedInShare extends Share {
   public platform = Platform.LinkedIn;
 
   public createUrl() {
-    const url = 'http://www.linkedin.com/shareArticle';
+    const url = 'http://www.linkedin.com/shareArticle/?mini=true';
     const params = {
       url: 'url',
       title: 'title',

@@ -24,7 +24,7 @@ export class KitchenSinkComponent implements OnInit {
 
   ngOnInit() {
     this.config = {
-      url: 'https://google.com',
+      url: 'https://google.com?test=true&code=999999',
       title: 'Title',
       description: 'Description',
 
