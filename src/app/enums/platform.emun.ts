@@ -4,8 +4,10 @@ export enum Platform {
   LinkedIn = 'linkedin',
   WhatsApp = 'whatsapp',
   Telegram = 'telegram',
+  Pinterest = 'pinterest',
   Reddit = 'reddit',
   Messenger = 'messenger',
+  Instagram = 'instagram',
   Tumblr = 'tumblr',
   Copy = 'copy',
   Any = 'any'

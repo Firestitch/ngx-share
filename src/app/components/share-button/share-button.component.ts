@@ -15,9 +15,12 @@ export class FsShareButtonComponent implements OnInit {
   @Input() description = '';
   @Input() title = '';
   @Input() url = '';
+  @Input() image = '';
   @Input() showLabel = true;
   @Input() showIcon = true;
   @Input() iconUrl = '';
+  @Input() href;
+  @Input() beforeOpen: Function;
 
   @Input('iconHeight') set setIconHeight(value: number) {
     if (value) {

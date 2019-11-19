@@ -1,12 +1,12 @@
-import { Input, HostListener, OnDestroy, Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Input, OnDestroy, Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FsShareService } from '../../services/share.service';
 import { Platform } from '../../enums/platform.emun';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, Observable, isObservable } from 'rxjs';
+import { takeUntil, take } from 'rxjs/operators';
 import { Platforms } from '../../consts/platforms.const';
 import { transform } from 'lodash-es';
 import { ShareConfig } from '../../interfaces';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Share } from '../../classes/share';
 import { Method } from '../../enums/method.enum';
 import { ClipboardService } from 'ngx-clipboard';
@@ -23,12 +23,16 @@ export class FsShareComponent implements OnDestroy, OnInit {
   @Input() description = '';
   @Input() title = '';
   @Input() url = '';
+  @Input() image = '';
+  @Input() href = '';
+  @Input() beforeOpen: Function;
 
   @Output() open = new EventEmitter<ShareEvent>();
 
   public platformNames = [];
-  public href;
   public show = true;
+  public safeHref: SafeUrl;
+
   private _destory$ = new Subject();
   private _share: Share;
 
@@ -40,25 +44,64 @@ export class FsShareComponent implements OnDestroy, OnInit {
     this.platformNames = transform(Platforms, (result, value) => {
       result[value.value] = value.name;
     }, {});
-    this.href = this._sanitizer.bypassSecurityTrustUrl('javascript:;');
   }
 
   public click(event: KeyboardEvent) {
 
-    if (this.platform === Platform.Copy) {
-      this._clipboardService.copyFromContent(this._share.config.url);
+    Observable.create(observer => {
 
-    } else if (this._share.getMethod() === Method.MetaRefesh) {
+      if (this.beforeOpen) {
+        const result = this.beforeOpen({ platform: this.platform });
 
-      event.preventDefault();
-      this._metaRefresh();
-    } else if (this._share.getMethod() === Method.Dialog) {
+        if (result instanceof Observable) {
 
-      event.preventDefault();
-      this._dialog();
-    }
+          result
+          .pipe(
+            take(1)
+          )
+          .subscribe(() => {
+            observer.next();
+            observer.complete();
+          }, () => {
+            observer.error();
+            observer.complete();
+          });
 
-    this.open.emit({ platform: this.platform });
+        } else if (result) {
+          observer.next();
+          observer.complete();
+
+        } else {
+          observer.error();
+          observer.complete();
+        }
+
+      } else {
+        observer.next();
+        observer.complete();
+      }
+    })
+    .subscribe(() => {
+
+      if (this.platform === Platform.Copy) {
+        this._clipboardService.copyFromContent(this._share.config.url);
+
+      } else if (this._share.getMethod() === Method.MetaRefesh) {
+
+        event.preventDefault();
+        this._metaRefresh();
+
+      } else if (this._share.getMethod() === Method.Dialog) {
+
+        event.preventDefault();
+        this._dialog();
+      }
+
+      this.open.emit({ platform: this.platform });
+
+    }, () => {
+
+    });
   }
 
   private _metaRefresh() {
@@ -89,14 +132,21 @@ export class FsShareComponent implements OnDestroy, OnInit {
     const config: ShareConfig = {
       url: this.url,
       description: this.description,
-      title: this.title
+      title: this.title,
+      image: this.image
     }
 
     this._share = this._shareService.createShare(this.platform, config);
-    //this.show = this._share.appSupported() || this._share.webSupported();
-    if (this._share.getMethod() === Method.Href) {
-      this.href = this._sanitizer.bypassSecurityTrustUrl(this._share.createUrl().toString());
+
+    if (this._share.getMethod() === Method.Href && !this.href) {
+      this.href = this._share.createUrl().toString();
     }
+
+    if (!this.href) {
+      this.href = 'javascript:;';
+    }
+
+    this.safeHref = this._sanitizer.bypassSecurityTrustUrl(this.href);
   }
 
   private _dialog() {

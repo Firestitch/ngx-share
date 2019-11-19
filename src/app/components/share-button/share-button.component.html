@@ -1,8 +1,11 @@
 <fs-share
   [title]="title"
   [url]="url"
+  [image]="image"
+  [href]="href"
   [description]="description"
   (open)="open.emit($event)"
+  [beforeOpen]="beforeOpen"
   [platform]="platform">
   <span class="button-container" [ngClass]="platform">
     <img [src]="iconUrl" *ngIf="showIcon" class="icon" [ngStyle]="iconStyles">

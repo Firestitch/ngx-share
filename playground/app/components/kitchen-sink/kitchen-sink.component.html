@@ -6,6 +6,8 @@
     [title]="config.title"
     [url]="config.url"
     [description]="config.description"
+    [image]="config.image"
+    [beforeOpen]="beforeOpen"
     (open)="open($event)">
       <button
         mat-raised-button
@@ -22,9 +24,11 @@
     [platform]="item.value"
     [title]="config.title"
     [url]="config.url"
+    [image]="config.image"
     [size]="120"
     [description]="config.description"
     (open)="open($event)"
+    [beforeOpen]="beforeOpen"
     *ngFor="let item of platforms">
   </fs-share-button>
 </div>

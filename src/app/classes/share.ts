@@ -49,7 +49,8 @@ export abstract class Share {
     const data = {
       description: this.buildDecription(),
       title: this.buildTitle(),
-      url: this.config.url
+      url: this.config.url,
+      image: this.config.image
     };
 
     forOwn(params, (param, key) => {

@@ -7,3 +7,5 @@ export * from './messenger';
 export * from './tumblr'
 export * from './copy';
 export * from './reddit';
+export * from './pinterest';
+export * from './instagram';

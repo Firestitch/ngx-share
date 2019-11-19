@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { ShareConfig } from '../interfaces';
-import { ClipboardService } from 'ngx-clipboard'
 import { Platform } from '../enums/platform.emun';
 import { FacebookShare,
         TwitterShare,
@@ -13,7 +12,9 @@ import { FacebookShare,
         TelegramShare,
         TumblrShare,
         MessengerShare,
-        RedditShare } from '../classes/platforms';
+        RedditShare,
+        PinterestShare,
+        InstagramShare} from '../classes/platforms';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Platforms } from '../consts/platforms.const';
 import { transform } from 'lodash-es';
@@ -32,7 +33,6 @@ export class FsShareService implements OnDestroy {
   private _platformNames;
 
   constructor(
-    private _clipboardService: ClipboardService,
     private _device: DeviceDetectorService
   ) {}
 
@@ -70,8 +70,11 @@ export class FsShareService implements OnDestroy {
       case Platform.Copy:
           return new CopyShare(config, this._device);
 
-      // case Platform.Any:
-      //   return new AnyShare(config);
+      case Platform.Pinterest:
+        return new PinterestShare(config, this._device);
+
+      case Platform.Instagram:
+        return new InstagramShare(config, this._device);
 
       default:
         throw 'Invalid platform';

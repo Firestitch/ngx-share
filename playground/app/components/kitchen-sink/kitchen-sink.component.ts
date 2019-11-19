@@ -5,6 +5,7 @@ import { FsMessage } from '@firestitch/message';
 import { ShareConfig } from 'src/app/interfaces';
 import { Platforms } from '@firestitch/package';
 import { ShareEvent } from 'src/app/interfaces/share-event.interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'kitchen-sink',
@@ -21,13 +22,12 @@ export class KitchenSinkComponent implements OnInit {
     exampleComponent.setConfigureComponent(KitchenSinkConfigureComponent, { config: this.config });
   }
 
-
   ngOnInit() {
     this.config = {
       url: 'https://google.com?test=true&code=999999',
       title: 'Title',
+      image: 'https://www.petmd.com/sites/default/files/petmd-puppy-weight.jpg',
       description: 'Description',
-
       error: (event: ShareEvent) => {
         this._message.error('Share failed - ' + event.error + ' on the ' + event.platform + ' platform');
       }
@@ -43,4 +43,10 @@ export class KitchenSinkComponent implements OnInit {
       }
   }
 
+  beforeOpen = (shareEvent: ShareEvent) => {
+    return Observable.create(observer => {
+      observer.error();
+      observer.complete();
+    });
+  }
 }

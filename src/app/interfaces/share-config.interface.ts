@@ -8,5 +8,6 @@ export interface ShareConfig {
   image?: string;
   success? (shareEvent: ShareEvent);
   open? (shareEvent: ShareEvent);
+  beforeOpen? (shareEvent: ShareEvent);
   error? (shareEvent: ShareEvent);
 }
