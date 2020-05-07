@@ -3,8 +3,10 @@ import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { ShareConfig } from '../interfaces';
+import { ClipboardService } from 'ngx-clipboard'
 import { Platform } from '../enums/platform.emun';
-import { FacebookShare,
+import { AnyShare,
+        FacebookShare,
         TwitterShare,
         CopyShare,
         LinkedInShare,
@@ -14,7 +16,8 @@ import { FacebookShare,
         MessengerShare,
         RedditShare,
         PinterestShare,
-        InstagramShare} from '../classes/platforms';
+        InstagramShare
+       } from '../classes/platforms';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Platforms } from '../consts/platforms.const';
 import { transform } from 'lodash-es';
@@ -33,6 +36,7 @@ export class FsShareService implements OnDestroy {
   private _platformNames;
 
   constructor(
+    private _clipboardService: ClipboardService,
     private _device: DeviceDetectorService
   ) {}
 
@@ -59,16 +63,13 @@ export class FsShareService implements OnDestroy {
         return new TelegramShare(config, this._device);
 
       case Platform.Tumblr:
-          return new TumblrShare(config, this._device);
+        return new TumblrShare(config, this._device);
 
       case Platform.Reddit:
-          return new RedditShare(config, this._device);
+        return new RedditShare(config, this._device);
 
       case Platform.Messenger:
-          return new MessengerShare(config, this._device);
-
-      case Platform.Copy:
-          return new CopyShare(config, this._device);
+        return new MessengerShare(config, this._device);
 
       case Platform.Pinterest:
         return new PinterestShare(config, this._device);
@@ -76,8 +77,14 @@ export class FsShareService implements OnDestroy {
       case Platform.Instagram:
         return new InstagramShare(config, this._device);
 
+      case Platform.Copy:
+        return new CopyShare(config, this._device);
+
+      case Platform.Any:
+        return new AnyShare(config, this._device);
+
       default:
-        throw 'Invalid platform';
+        throw 'Invalid platform: ' + platform;
     }
   }
 

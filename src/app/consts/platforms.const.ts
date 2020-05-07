@@ -11,5 +11,6 @@ export const Platforms = [
   { value: Platform.Messenger, name: 'Messenger' },
   { value: Platform.Instagram, name: 'Instagram' },
   { value: Platform.Tumblr, name: 'Tumblr' },
-  { value: Platform.Copy, name: 'Copy' }
+  { value: Platform.Copy, name: 'Copy' },
+  { value: Platform.Any, name: 'Other' },
 ]
