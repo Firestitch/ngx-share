@@ -1,6 +1,7 @@
 import { Share } from '../share';
 import { Platform } from '../../enums/platform.emun';
 import { Observable } from 'rxjs';
+import { Method } from '../../enums/method.enum';
 
 export class AnyShare extends Share {
 
@@ -16,7 +17,7 @@ export class AnyShare extends Share {
   }
 
   public getMethod() {
-    return null;
+    return Method.Dialog;
   }
 
   public open(): Observable<any> {

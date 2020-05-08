@@ -45,7 +45,8 @@ export class KitchenSinkComponent implements OnInit {
 
   beforeOpen = (shareEvent: ShareEvent) => {
     return Observable.create(observer => {
-      observer.error();
+      //observer.error();
+      observer.next();
       observer.complete();
     });
   }
