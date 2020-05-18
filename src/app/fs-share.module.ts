@@ -26,7 +26,7 @@ import { FsShareComponent } from './components/share/share.component';
   ]
 })
 export class FsShareModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<FsShareModule> {
     return {
       ngModule: FsShareModule,
       providers: [FsShareService]
