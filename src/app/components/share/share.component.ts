@@ -48,7 +48,7 @@ export class FsShareComponent implements OnDestroy, OnInit {
 
   public click(event: KeyboardEvent) {
 
-    Observable.create(observer => {
+    new Observable((observer) => {
 
       if (this.beforeOpen) {
         const result = this.beforeOpen({ platform: this.platform });

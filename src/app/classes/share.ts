@@ -66,36 +66,51 @@ export abstract class Share {
 
   public open(): Observable<any> {
 
-    return new Observable(observer => {
+    return new Observable((observer) => {
 
-      const w: Window = window;
-      const width = 800;
-      const height = 500;
+      const navigator = (window as any).navigator;
+      if (navigator.share) {
+        navigator.share({
+          url: this.createUrl().toString(),
+        })
+          .then(() => {
+            alert('Successful share')
+          })
+          .catch((error) => {
+            alert('Error sharing' + JSON.stringify(error));
+          });
 
-      const el = document.documentElement;
-      const windowWidth = w.innerWidth ? w.innerWidth : el.clientWidth ? el.clientWidth : screen.width;
-      const windowHeight = w.innerHeight ? w.innerHeight : el.clientHeight ? el.clientHeight : screen.height;
-      const left = (windowWidth - width) / 2;
-      const top = (windowHeight - height) / 2;
+      } else {
 
-      const options = [
-        'width=' + width,
-        'height=' + height,
-        'top=' + top,
-        'left=' + left
-      ];
+        const w: Window = window;
+        const width = 800;
+        const height = 500;
 
-      const win = window.open(this.createUrl().toString(), '_system', options.join(','));
-      const timer = (<any>window).setInterval(() => {
-        if (win.closed !== false) {
+        const el = document.documentElement;
+        const windowWidth = w.innerWidth ? w.innerWidth : el.clientWidth ? el.clientWidth : screen.width;
+        const windowHeight = w.innerHeight ? w.innerHeight : el.clientHeight ? el.clientHeight : screen.height;
+        const left = (windowWidth - width) / 2;
+        const top = (windowHeight - height) / 2;
+
+        const options = [
+          'width=' + width,
+          'height=' + height,
+          'top=' + top,
+          'left=' + left
+        ];
+
+        const win = window.open(this.createUrl().toString(), '_system', options.join(','));
+        const timer = (<any>window).setInterval(() => {
+          if (win.closed !== false) {
             window.clearInterval(timer);
             observer.next(true);
             observer.complete();
-        }
-      }, 200);
+          }
+        }, 200);
 
-      if (win && win.focus) {
-        win.focus();
+        if (win && win.focus) {
+          win.focus();
+        }
       }
 
     });
