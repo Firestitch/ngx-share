@@ -76,10 +76,10 @@ export abstract class Share {
           url: this.config.url,
         })
           .then(() => {
-            alert('Successful share')
+
           })
           .catch((error) => {
-            alert('Error sharing' + JSON.stringify(error));
+
           });
 
       } else {
