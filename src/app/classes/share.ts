@@ -71,7 +71,9 @@ export abstract class Share {
       const navigator = (window as any).navigator;
       if (navigator.share) {
         navigator.share({
-          url: this.createUrl().toString(),
+          title: this.config.title,
+          text: this.config.description,
+          url: this.config.url,
         })
           .then(() => {
             alert('Successful share')
