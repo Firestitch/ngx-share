@@ -24,7 +24,7 @@ export class KitchenSinkComponent implements OnInit {
 
   ngOnInit() {
     this.config = {
-      url: 'https://google.com?test=true&code=999999',
+      url: window.location.toString(),
       title: 'Title',
       image: 'https://www.petmd.com/sites/default/files/petmd-puppy-weight.jpg',
       description: 'Description',
