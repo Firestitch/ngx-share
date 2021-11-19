@@ -1,23 +1,22 @@
 import { Share } from '../share';
 import { Platform } from '../../enums/platform.emun';
-import { Observable } from 'rxjs';
 import { Method } from '../../enums/method.enum';
 
-export class TwitterShare extends Share {
 
-  public platform = Platform.Twitter;
+export class SnapchatShare extends Share {
+
+  public platform = Platform.Snapchat;
 
   public createUrl() {
-    const url = 'https://twitter.com/intent/tweet';
+    const url = 'https://www.snapchat.com/scan';
     const params = {
-      url: 'url',
-      description: 'text'
+      url: 'attachmentUrl'
     };
 
     return this._createUrl(url, params);
   }
 
   public getMethod() {
-    return Method.Dialog;
+    return Method.Href;
   }
 }

@@ -1,13 +1,13 @@
 <fs-share
-  [title]="title"
-  [url]="url"
-  [image]="image"
-  [href]="href"
-  [description]="description"
-  (open)="open.emit($event)"
-  [beforeOpen]="beforeOpen"
-  [platform]="platform">
-  <span class="button-container" [ngClass]="platform">
+    [title]="title"
+    [url]="url"
+    [image]="image"
+    [href]="href"
+    [description]="description"
+    (open)="open.emit($event)"
+    [beforeOpen]="beforeOpen"
+    [platform]="platform">
+  <span class="button-container" [class]="shape + ' ' + platform" [ngClass]="{ 'show-label': showLabel }">
     <img [src]="iconUrl" *ngIf="showIcon" class="icon" [ngStyle]="iconStyles">
     <span class="label" *ngIf="showLabel && platformNames[platform]" [ngStyle]="labelStyles">{{platformNames[platform]}}</span>
  </span>

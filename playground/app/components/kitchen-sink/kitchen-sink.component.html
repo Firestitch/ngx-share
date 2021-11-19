@@ -1,4 +1,3 @@
-
 <div fxLayout="row wrap">
   <fs-share
     *ngFor="let platform of platforms"
@@ -19,16 +18,69 @@
 
 <br><br>
 
+<div fxLayout="row wrap" class="field-row">
+  <mat-form-field>
+    <mat-select
+        [(ngModel)]="shape"
+        name="shape"
+        placeholder="Shape">
+      <mat-option value="square">Square</mat-option>
+      <mat-option value="circle">Circle</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      [(ngModel)]="size"
+      name="size"
+      placeholder="Size">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      [(ngModel)]="iconHeight"
+      name="iconHeight"
+      placeholder="Icon Height">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select
+        [(ngModel)]="showLabel"
+        name="showLabel"
+        placeholder="Show Label">
+      <mat-option [value]="true">Yes</mat-option>
+      <mat-option [value]="false">No</mat-option>
+    </mat-select>
+  </mat-form-field>  
+
+  <mat-form-field>
+    <mat-select
+        [(ngModel)]="showIcon"
+        name="showIcon"
+        placeholder="Show Icon">
+      <mat-option [value]="true">Yes</mat-option>
+      <mat-option [value]="false">No</mat-option>
+    </mat-select>
+  </mat-form-field>  
+
+</div>
+
 <div fxLayout="row wrap">
   <fs-share-button
     [platform]="item.value"
     [title]="config.title"
     [url]="config.url"
     [image]="config.image"
-    [size]="120"
+    [size]="size"
     [description]="config.description"
     (open)="open($event)"
+    [showIcon]="showIcon"
+    [showLabel]="showLabel"
     [beforeOpen]="beforeOpen"
+    [iconHeight]="iconHeight"
+    [shape]="shape"
     *ngFor="let item of platforms">
   </fs-share-button>
 </div>

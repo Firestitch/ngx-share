@@ -10,6 +10,7 @@ export const Platforms = [
   { value: Platform.Telegram, name: 'Telegram' },
   { value: Platform.Messenger, name: 'Messenger' },
   { value: Platform.Instagram, name: 'Instagram' },
+  { value: Platform.Snapchat, name: 'Snapchat' },
   { value: Platform.Tumblr, name: 'Tumblr' },
   { value: Platform.Copy, name: 'Copy' },
   { value: Platform.Any, name: 'Other' },

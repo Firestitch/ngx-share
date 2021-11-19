@@ -1,7 +1,7 @@
 import { Input, OnDestroy, Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FsShareService } from '../../services/share.service';
 import { Platform } from '../../enums/platform.emun';
-import { Subject, Observable, isObservable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 import { Platforms } from '../../consts/platforms.const';
 import { transform } from 'lodash-es';

@@ -21,6 +21,7 @@ export class FsShareButtonComponent implements OnInit {
   @Input() iconUrl = '';
   @Input() href;
   @Input() beforeOpen: Function;
+  @Input() shape: 'square' | 'circle' = 'square';
 
   @Input('iconHeight') set setIconHeight(value: number) {
     if (value) {
@@ -46,7 +47,7 @@ export class FsShareButtonComponent implements OnInit {
     this.platformNames = this._shareService.platformNames;
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     if (!this.iconUrl) {
       this.iconUrl = '/assets/@firestitch/share/' + this.platform + '.svg';
     }

@@ -16,9 +16,16 @@ export class KitchenSinkComponent implements OnInit {
 
   public config: ShareConfig = {};
   public platforms = Platforms;
+  public shape = 'square';
+  public size = 100;
+  public iconHeight = 20;
+  public showLabel = true;
+  public showIcon = true;
 
-  constructor(private exampleComponent: FsExampleComponent,
-              private _message: FsMessage) {
+  constructor(
+    private exampleComponent: FsExampleComponent,
+    private _message: FsMessage
+  ) {
     exampleComponent.setConfigureComponent(KitchenSinkConfigureComponent, { config: this.config });
   }
 

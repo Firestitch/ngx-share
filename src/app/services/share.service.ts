@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { ShareConfig } from '../interfaces';
-import { ClipboardService } from 'ngx-clipboard'
 import { Platform } from '../enums/platform.emun';
 import { AnyShare,
         FacebookShare,
@@ -16,7 +15,8 @@ import { AnyShare,
         MessengerShare,
         RedditShare,
         PinterestShare,
-        InstagramShare
+        InstagramShare,
+        SnapchatShare
        } from '../classes/platforms';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Platforms } from '../consts/platforms.const';
@@ -36,7 +36,6 @@ export class FsShareService implements OnDestroy {
   private _platformNames;
 
   constructor(
-    private _clipboardService: ClipboardService,
     private _device: DeviceDetectorService
   ) {}
 
@@ -77,6 +76,9 @@ export class FsShareService implements OnDestroy {
       case Platform.Instagram:
         return new InstagramShare(config, this._device);
 
+      case Platform.Snapchat:
+        return new SnapchatShare(config, this._device);
+      
       case Platform.Copy:
         return new CopyShare(config, this._device);
 

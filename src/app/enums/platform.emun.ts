@@ -9,6 +9,7 @@ export enum Platform {
   Messenger = 'messenger',
   Instagram = 'instagram',
   Tumblr = 'tumblr',
+  Snapchat = 'snapchat',
   Copy = 'copy',
   Any = 'any'
 }

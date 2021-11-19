@@ -3,7 +3,7 @@ img {
 }
 
 .button-container {
-  padding: 9px 15px;
+  padding: 9px;
   border-radius: 4px;
   outline: none;
   font-family: inherit;
@@ -11,6 +11,15 @@ img {
   cursor: pointer;
   display: inline-block;
   margin: 5px;
+
+  &.circle {
+    border-radius: 100%;
+  }
+
+  &.show-label {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
 
   &.facebook {
     background-color: #4267B2;
@@ -48,6 +57,10 @@ img {
     background-color: #0080FF;
   }
 
+  &.snapchat {
+    background-color: #F7F40D;
+  }
+
   &.reddit {
     background-color: #FF4006;
   }
@@ -68,6 +81,9 @@ img {
 .label {
   color: #fff;
   font-size: 15px;
+}
+
+.icon + .label {  
   margin-left: 9px;
 }
 
