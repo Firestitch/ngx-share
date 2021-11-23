@@ -2,7 +2,7 @@
   "name": "@firestitch/share",
   "title": "Share",
   "description": "@firestitch/share",
-  "version": "9.0.4",
+  "version": "9.1.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-share"
@@ -49,6 +49,8 @@
     "@firestitch/label": "^8.2.4",
     "@firestitch/menu": "^9.1.1",
     "@firestitch/message": "^8.1.0",
+    "@firestitch/colorpicker": "^10.0.3",
+    "@firestitch/clear": "^8.1.0",
     "classlist.js": "^1.1.20150312",
     "codelyzer": "^5.1.2",
     "core-js": "2.6.9",

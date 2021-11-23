@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { KitchenSinkConfigureComponent } from '../kitchen-sink-configure';
 import { FsExampleComponent } from '@firestitch/example';
 import { FsMessage } from '@firestitch/message';
 import { ShareConfig } from 'src/app/interfaces';
 import { Platforms } from '@firestitch/package';
 import { ShareEvent } from 'src/app/interfaces/share-event.interface';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+
 
 @Component({
   selector: 'kitchen-sink',
   templateUrl: 'kitchen-sink.component.html',
-  styleUrls: ['kitchen-sink.component.scss']
+  styleUrls: ['kitchen-sink.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KitchenSinkComponent implements OnInit {
 
@@ -18,7 +20,8 @@ export class KitchenSinkComponent implements OnInit {
   public platforms = Platforms;
   public shape = 'square';
   public size = 100;
-  public iconHeight = 20;
+  public iconSize;
+  public iconColor = '#ffffff';
   public showLabel = true;
   public showIcon = true;
 
@@ -51,10 +54,6 @@ export class KitchenSinkComponent implements OnInit {
   }
 
   beforeOpen = (shareEvent: ShareEvent) => {
-    return Observable.create(observer => {
-      //observer.error();
-      observer.next();
-      observer.complete();
-    });
+    return of(true);
   }
 }

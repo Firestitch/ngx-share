@@ -2,6 +2,7 @@ import { Input, Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FsShareService } from '../../services/share.service';
 import { Platform } from '../../enums/platform.emun';
 import { ShareEvent } from '../../interfaces/share-event.interface';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -11,37 +12,24 @@ import { ShareEvent } from '../../interfaces/share-event.interface';
 })
 export class FsShareButtonComponent implements OnInit {
 
-  @Input() platform: Platform;
-  @Input() description = '';
-  @Input() title = '';
-  @Input() url = '';
-  @Input() image = '';
-  @Input() showLabel = true;
-  @Input() showIcon = true;
-  @Input() iconUrl = '';
-  @Input() href;
-  @Input() beforeOpen: Function;
-  @Input() shape: 'square' | 'circle' = 'square';
-
-  @Input('iconHeight') set setIconHeight(value: number) {
-    if (value) {
-      this.iconStyles.height = value + 'px';
-    }
-  }
-
-  @Input('size') set setSize(value: number) {
-    if (value) {
-      const percent = (value / 100);
-      this.iconStyles.height = (percent * 20) + 'px';
-      this.labelStyles.fontSize = value + '%';
-    }
-  }
+  @Input() public platform: Platform;
+  @Input() public description = '';
+  @Input() public title = '';
+  @Input() public url = '';
+  @Input() public image = '';
+  @Input() public showLabel = true;
+  @Input() public showIcon = true;
+  @Input() public iconUrl = '';
+  @Input() public color = '#ffffff';
+  @Input() public href;
+  @Input() public beforeOpen: ({ platform: string }) => Observable<any> | any;
+  @Input() public shape: 'square' | 'circle' = 'square';
+  @Input() public iconSize: number;
+  @Input() public size: number;
 
   @Output() open = new EventEmitter<ShareEvent>();
 
   public platformNames = [];
-  public iconStyles: any = {};
-  public labelStyles: any = {};
 
   constructor(private _shareService: FsShareService) {
     this.platformNames = this._shareService.platformNames;

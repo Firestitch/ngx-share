@@ -7,8 +7,26 @@
     (open)="open.emit($event)"
     [beforeOpen]="beforeOpen"
     [platform]="platform">
-  <span class="button-container" [class]="shape + ' ' + platform" [ngClass]="{ 'show-label': showLabel }">
-    <img [src]="iconUrl" *ngIf="showIcon" class="icon" [ngStyle]="iconStyles">
-    <span class="label" *ngIf="showLabel && platformNames[platform]" [ngStyle]="labelStyles">{{platformNames[platform]}}</span>
+  <span 
+      class="button-container" 
+      [class]="shape + ' ' + platform" 
+      [ngClass]="{ 'show-label': showLabel }"      
+      [style.paddingTop]="((size / 100) + 7) + 'px'"
+      [style.paddingBottom]="((size / 100) + 7) + 'px'"
+      [style.paddingLeft]="((size / 100) + (showLabel ? 10 : 7)) + 'px'"
+      [style.paddingRight]="((size / 100) + (showLabel ? 10 : 7)) + 'px'">
+    <fs-share-icon 
+      class="icon"
+      [size]="iconSize ? iconSize : (size / 100) * 20"
+      *ngIf="showIcon"
+      [color]="color"
+      [platform]="platform">
+    </fs-share-icon>
+    <span 
+        class="label" 
+        *ngIf="showLabel && platformNames[platform]" 
+        [ngStyle]="{ 'font-size': size + '%', color: color }">
+      {{platformNames[platform]}}
+    </span>
  </span>
 </fs-share>

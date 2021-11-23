@@ -25,7 +25,7 @@ export class FsShareComponent implements OnDestroy, OnInit {
   @Input() url = '';
   @Input() image = '';
   @Input() href = '';
-  @Input() beforeOpen: Function;
+  @Input() beforeOpen: ({ platform: string }) => Observable<any> | any;
 
   @Output() open = new EventEmitter<ShareEvent>();
 

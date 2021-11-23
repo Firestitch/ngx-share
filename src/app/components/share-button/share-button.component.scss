@@ -1,9 +1,4 @@
-img {
-  height: 20px;
-}
-
 .button-container {
-  padding: 9px;
   border-radius: 4px;
   outline: none;
   font-family: inherit;
@@ -11,14 +6,15 @@ img {
   cursor: pointer;
   display: inline-block;
   margin: 5px;
+  display: flex;
+  align-items: center;
+
+  fs-share-icon {
+    display: flex;
+  }
 
   &.circle {
     border-radius: 100%;
-  }
-
-  &.show-label {
-    padding-right: 15px;
-    padding-left: 15px;
   }
 
   &.facebook {
@@ -67,6 +63,10 @@ img {
 
   &.pinterest {
     background-color: #E6001A;
+  }
+
+  &.email {
+    background-color: #6067D0;
   }
 
   &.instagram {

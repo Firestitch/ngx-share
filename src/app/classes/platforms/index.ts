@@ -11,3 +11,4 @@ export * from './reddit';
 export * from './pinterest';
 export * from './instagram';
 export * from './snapchat';
+export * from './email';

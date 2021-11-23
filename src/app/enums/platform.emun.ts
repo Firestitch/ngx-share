@@ -11,5 +11,6 @@ export enum Platform {
   Tumblr = 'tumblr',
   Snapchat = 'snapchat',
   Copy = 'copy',
+  Email = 'email',
   Any = 'any'
 }

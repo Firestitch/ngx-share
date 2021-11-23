@@ -16,7 +16,8 @@ import { AnyShare,
         RedditShare,
         PinterestShare,
         InstagramShare,
-        SnapchatShare
+        SnapchatShare,
+        EmailShare
        } from '../classes/platforms';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Platforms } from '../consts/platforms.const';
@@ -82,9 +83,12 @@ export class FsShareService implements OnDestroy {
       case Platform.Copy:
         return new CopyShare(config, this._device);
 
+      case Platform.Email:
+        return new EmailShare(config, this._device);
+
       case Platform.Any:
         return new AnyShare(config, this._device);
-
+      
       default:
         throw 'Invalid platform: ' + platform;
     }
