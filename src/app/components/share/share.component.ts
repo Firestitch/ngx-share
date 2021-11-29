@@ -1,10 +1,9 @@
-import { Input, OnDestroy, Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Input, OnDestroy, Component, OnInit } from '@angular/core';
 import { FsShareService } from '../../services/share.service';
 import { Platform } from '../../enums/platform.emun';
-import { Subject, Observable } from 'rxjs';
-import { takeUntil, take } from 'rxjs/operators';
+import { Subject, Observable, of } from 'rxjs';
+import { takeUntil, switchMap } from 'rxjs/operators';
 import { Platforms } from '../../consts/platforms.const';
-import { transform } from 'lodash-es';
 import { ShareConfig } from '../../interfaces';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Share } from '../../classes/share';
@@ -15,7 +14,7 @@ import { ShareEvent } from '../../interfaces/share-event.interface';
 
 @Component({
   selector: 'fs-share',
-  templateUrl: './share.component.html'
+  templateUrl: './share.component.html',
 })
 export class FsShareComponent implements OnDestroy, OnInit {
 
@@ -25,11 +24,10 @@ export class FsShareComponent implements OnDestroy, OnInit {
   @Input() url = '';
   @Input() image = '';
   @Input() href = '';
-  @Input() beforeOpen: ({ platform: string }) => Observable<any> | any;
+  @Input() beforeOpen: (shareEvent: ShareEvent) => Observable<any> | any;
+  @Input() open: (shareEvent: ShareEvent) => Observable<any> | any;
 
-  @Output() open = new EventEmitter<ShareEvent>();
-
-  public platformNames = [];
+  public platformNames = {};
   public show = true;
   public safeHref: SafeUrl;
 
@@ -41,66 +39,40 @@ export class FsShareComponent implements OnDestroy, OnInit {
     private _sanitizer: DomSanitizer,
     private _clipboardService: ClipboardService,
   ) {
-    this.platformNames = transform(Platforms, (result, value) => {
+    this.platformNames = Platforms.reduce((result, value) => {
       result[value.value] = value.name;
+
+      return result;
     }, {});
   }
 
   public click(event: KeyboardEvent) {
+    event.preventDefault();
 
-    new Observable((observer) => {
-
-      if (this.beforeOpen) {
-        const result = this.beforeOpen({ platform: this.platform });
-
-        if (result instanceof Observable) {
-
-          result
-          .pipe(
-            take(1)
-          )
-          .subscribe(() => {
-            observer.next();
-            observer.complete();
-          }, () => {
-            observer.error();
-            observer.complete();
-          });
-
-        } else if (result) {
-          observer.next();
-          observer.complete();
-
-        } else {
-          observer.error();
-          observer.complete();
-        }
-
-      } else {
-        observer.next();
-        observer.complete();
-      }
-    })
+    of(true)
+    .pipe(
+      switchMap(() => {
+        const result = this.beforeOpen ? this.beforeOpen({ platform: this.platform }) : true;
+        return result instanceof Observable ? result : of(true);
+      }),
+      switchMap(() => {
+        const result = this.open ? this.open({ platform: this.platform }) : true;
+        return result instanceof Observable ? result : of(true); 
+      }),
+      takeUntil(this._destory$),
+    )
     .subscribe(() => {
-
       if (this.platform === Platform.Copy) {
         this._clipboardService.copyFromContent(this._share.config.url);
 
       } else if (this._share.getMethod() === Method.MetaRefesh) {
-
-        event.preventDefault();
         this._metaRefresh();
 
       } else if (this._share.getMethod() === Method.Dialog) {
-
-        event.preventDefault();
         this._dialog();
+      } else if (this._share.getMethod() === Method.Href) {
+        location.href = this.href;
       }
-
-      this.open.emit({ platform: this.platform });
-
-    }, () => {
-
     });
   }
 
@@ -116,9 +88,9 @@ export class FsShareComponent implements OnDestroy, OnInit {
       <script>setTimeout(function() { window.close() }, 1000);</script>
     </html>`
 
-    newWindow .document.open();
-    newWindow .document.write(html)
-    newWindow .document.close();
+    newWindow.document.open();
+    newWindow.document.write(html)
+    newWindow.document.close();
 
     setTimeout(() => {
       if (newWindow) {
@@ -128,7 +100,6 @@ export class FsShareComponent implements OnDestroy, OnInit {
   }
 
   public ngOnInit() {
-
     const config: ShareConfig = {
       url: this.url,
       description: this.description,
@@ -142,15 +113,14 @@ export class FsShareComponent implements OnDestroy, OnInit {
       this.href = this._share.createUrl().toString();
     }
 
-    if (!this.href) {
+    if (this.href) {
+      this.safeHref = this._sanitizer.bypassSecurityTrustUrl(this.href);
+    } else {
       this.href = 'javascript:;';
-    }
-
-    this.safeHref = this._sanitizer.bypassSecurityTrustUrl(this.href);
+    }    
   }
 
   private _dialog() {
-
     this._share.open()
     .pipe(
       takeUntil(this._destory$)

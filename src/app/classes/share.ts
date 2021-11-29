@@ -11,17 +11,20 @@ export abstract class Share {
 
   public config: ShareConfig;
 
-  constructor(config: ShareConfig, deviceDetectorService: DeviceDetectorService) {
-    this.config = config;
-    this._deviceDetectorService = deviceDetectorService;
-  }
-
   public abstract platform: Platform;
 
   public abstract createUrl(): URL;
   public abstract getMethod(): Method;
 
   protected _deviceDetectorService: DeviceDetectorService;
+  
+  constructor(
+    config: ShareConfig, 
+    deviceDetectorService: DeviceDetectorService
+  ) {
+    this.config = config;
+    this._deviceDetectorService = deviceDetectorService;
+  }
 
   public getPlatformName() {
     const platform = Platforms.find((item) => {
@@ -65,11 +68,9 @@ export abstract class Share {
   }
 
   public open(): Observable<any> {
-
     return new Observable((observer) => {
-
       const navigator = (window as any).navigator;
-      if (navigator.share) {
+      if (this._deviceDetectorService.isMobile() && navigator.share) {
         navigator.share({
           title: this.config.title,
           text: this.config.description,

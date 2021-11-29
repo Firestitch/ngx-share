@@ -5,7 +5,7 @@ import { FsMessage } from '@firestitch/message';
 import { ShareConfig } from 'src/app/interfaces';
 import { Platforms } from '@firestitch/package';
 import { ShareEvent } from 'src/app/interfaces/share-event.interface';
-import { Observable, of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class KitchenSinkComponent implements OnInit {
     exampleComponent.setConfigureComponent(KitchenSinkConfigureComponent, { config: this.config });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.config = {
       url: window.location.toString(),
       title: 'Title',
@@ -44,16 +44,18 @@ export class KitchenSinkComponent implements OnInit {
     };
   }
 
-  open(event) {
-      console.log(event);
-      if (event.platform == 'copy') {
-        this._message.success('Link copied');
-      } else {
-        this._message.success(event.platform + ' share opened');
-      }
-  }
+  public open = (event) => {
+    console.log(event);
+    if (event.platform == 'copy') {
+      this._message.success('Link copied');
+    } else {
+      this._message.success(event.platform + ' share opened');
+    }
 
-  beforeOpen = (shareEvent: ShareEvent) => {
     return of(true);
-  }
+  };
+
+  public beforeOpen = (shareEvent: ShareEvent) => {
+    return of(true);
+  };
 }

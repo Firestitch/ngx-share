@@ -7,7 +7,7 @@
     [description]="config.description"
     [image]="config.image"
     [beforeOpen]="beforeOpen"
-    (open)="open($event)">
+    [open]="open">
       <button
         mat-raised-button
         color="primary">
@@ -84,7 +84,7 @@
     [image]="config.image"
     [size]="size"
     [description]="config.description"
-    (open)="open($event)"
+    [open]="open"
     [showIcon]="showIcon"
     [color]="iconColor"
     [showLabel]="showLabel"

@@ -4,21 +4,22 @@ import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { ShareConfig } from '../interfaces';
 import { Platform } from '../enums/platform.emun';
-import { AnyShare,
-        FacebookShare,
-        TwitterShare,
-        CopyShare,
-        LinkedInShare,
-        WhatsAppShare,
-        TelegramShare,
-        TumblrShare,
-        MessengerShare,
-        RedditShare,
-        PinterestShare,
-        InstagramShare,
-        SnapchatShare,
-        EmailShare
-       } from '../classes/platforms';
+import { 
+  AnyShare,
+  FacebookShare,
+  TwitterShare,
+  CopyShare,
+  LinkedInShare,
+  WhatsAppShare,
+  TelegramShare,
+  TumblrShare,
+  MessengerShare,
+  RedditShare,
+  PinterestShare,
+  InstagramShare,
+  SnapchatShare,
+  EmailShare
+} from '../classes/platforms';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Platforms } from '../consts/platforms.const';
 import { transform } from 'lodash-es';
@@ -26,8 +27,6 @@ import { transform } from 'lodash-es';
 
 @Injectable()
 export class FsShareService implements OnDestroy {
-
-  public isMobile = (<any>window).plugins && (<any>window).plugins.socialsharing;
 
   public twitterAvailable = false;
   public facebookAvailable = false;
@@ -45,7 +44,6 @@ export class FsShareService implements OnDestroy {
   }
 
   public createShare(platform: Platform, config: ShareConfig) {
-
     switch (platform) {
       case Platform.Facebook:
         return new FacebookShare(config, this._device);

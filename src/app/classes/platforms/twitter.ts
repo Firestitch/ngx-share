@@ -1,7 +1,7 @@
 import { Share } from '../share';
 import { Platform } from '../../enums/platform.emun';
-import { Observable } from 'rxjs';
 import { Method } from '../../enums/method.enum';
+
 
 export class TwitterShare extends Share {
 

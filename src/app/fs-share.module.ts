@@ -4,16 +4,15 @@ import { ClipboardModule } from 'ngx-clipboard';
 
 import { FsShareService } from './services/share.service';
 import { FsShareButtonComponent } from './components/share-button/share-button.component';
-import { DeviceDetectorModule } from 'ngx-device-detector';
 import { FsShareComponent } from './components/share/share.component';
 import { FsShareIconComponent } from './components/share-icon/share-icon.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 
 @NgModule({
   imports: [
     CommonModule,
     ClipboardModule,
-    DeviceDetectorModule
   ],
   exports: [
     FsShareComponent,
@@ -24,6 +23,9 @@ import { FsShareIconComponent } from './components/share-icon/share-icon.compone
     FsShareComponent,
     FsShareButtonComponent,
     FsShareIconComponent,
+  ],
+  providers: [
+    DeviceDetectorService,
   ]
 })
 export class FsShareModule {

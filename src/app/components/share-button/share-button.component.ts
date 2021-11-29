@@ -1,14 +1,15 @@
-import { Input, Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Input, Component, OnInit } from '@angular/core';
 import { FsShareService } from '../../services/share.service';
 import { Platform } from '../../enums/platform.emun';
 import { ShareEvent } from '../../interfaces/share-event.interface';
 import { Observable } from 'rxjs';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 
 @Component({
   selector: 'fs-share-button',
   templateUrl: './share-button.component.html',
-  styleUrls: ['./share-button.component.scss']
+  styleUrls: ['./share-button.component.scss'],
 })
 export class FsShareButtonComponent implements OnInit {
 
@@ -22,12 +23,11 @@ export class FsShareButtonComponent implements OnInit {
   @Input() public iconUrl = '';
   @Input() public color = '#ffffff';
   @Input() public href;
-  @Input() public beforeOpen: ({ platform: string }) => Observable<any> | any;
+  @Input() public beforeOpen: (shareEvent: ShareEvent) => Observable<any> | any;
+  @Input() public open: (shareEvent: ShareEvent) => Observable<any> | any;
   @Input() public shape: 'square' | 'circle' = 'square';
   @Input() public iconSize: number;
   @Input() public size: number;
-
-  @Output() open = new EventEmitter<ShareEvent>();
 
   public platformNames = [];
 
