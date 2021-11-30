@@ -9,6 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+
 import { Platform } from '../../enums/platform.emun';
 import { Platforms } from '../../consts/platforms.const';
 
@@ -16,7 +17,6 @@ import { Platforms } from '../../consts/platforms.const';
 @Component({
   selector: 'fs-share-icon',
   templateUrl: './share-icon.component.html',
-  styleUrls: ['./share-icon.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FsShareIconComponent implements OnChanges, OnInit {

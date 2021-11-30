@@ -1,8 +1,10 @@
 import { Input, Component, OnInit } from '@angular/core';
+
+import { Observable } from 'rxjs';
+
 import { FsShareService } from '../../services/share.service';
 import { Platform } from '../../enums/platform.emun';
 import { ShareEvent } from '../../interfaces/share-event.interface';
-import { Observable } from 'rxjs';
 
 
 @Component({

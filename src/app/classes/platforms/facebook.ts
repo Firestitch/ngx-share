@@ -33,11 +33,11 @@ export class FacebookShare extends Share {
           '',
           null,
           this.config.url,
-          function(response) {
+          (response) => {
             observer.next(response);
             observer.complete();
           },
-          function(errormsg) {
+          (errormsg) => {
             observer.error(errormsg);
           }
         );

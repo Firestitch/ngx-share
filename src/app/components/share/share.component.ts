@@ -1,14 +1,17 @@
 import { Input, OnDestroy, Component, OnInit } from '@angular/core';
-import { FsShareService } from '../../services/share.service';
-import { Platform } from '../../enums/platform.emun';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 import { Subject, Observable, of } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';
+
+import { ClipboardService } from 'ngx-clipboard';
+
+import { FsShareService } from '../../services/share.service';
+import { Platform } from '../../enums/platform.emun';
 import { Platforms } from '../../consts/platforms.const';
 import { ShareConfig } from '../../interfaces';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Share } from '../../classes/share';
 import { Method } from '../../enums/method.enum';
-import { ClipboardService } from 'ngx-clipboard';
 import { ShareEvent } from '../../interfaces/share-event.interface';
 
 
