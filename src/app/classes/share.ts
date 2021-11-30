@@ -35,7 +35,7 @@ export abstract class Share {
   }
 
   public appSupported(): boolean {
-    return false;
+    return true;
   }
 
   public buildDecription() {
