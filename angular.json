@@ -149,7 +149,7 @@
           }
         ,          "configurations": {
             "production": {
-              "tsConfig": "src/tsconfig.lib.prod.json"
+              "tsConfig": "src/tsconfig.lib.json"
             }
           }
 },
