@@ -17,6 +17,7 @@ import { Platforms } from '../../consts/platforms.const';
 @Component({
   selector: 'fs-share-icon',
   templateUrl: './share-icon.component.html',
+  styleUrls: ['./share-icon.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FsShareIconComponent implements OnChanges, OnInit {

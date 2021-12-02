@@ -6,6 +6,7 @@ import { ShareConfig } from 'src/app/interfaces';
 import { Platforms } from '@firestitch/package';
 import { ShareEvent } from 'src/app/interfaces/share-event.interface';
 import { of, throwError } from 'rxjs';
+import { delay, switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -52,7 +53,10 @@ export class KitchenSinkComponent implements OnInit {
       this._message.success(event.platform + ' share opened');
     }
 
-    return of(true);
+    return of(true)
+    .pipe(
+      delay(1000),
+    );
   };
 
   public beforeOpen = (shareEvent: ShareEvent) => {
