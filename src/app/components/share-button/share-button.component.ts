@@ -22,6 +22,7 @@ export class FsShareButtonComponent {
   @Input() public showLabel = true;
   @Input() public showIcon = true;
   @Input() public iconOrigin = '';
+  @Input() public iconUrl = '';
   @Input() public color = '#ffffff';
   @Input() public href;
   @Input() public beforeOpen: (shareEvent: ShareEvent) => Observable<any> | any;

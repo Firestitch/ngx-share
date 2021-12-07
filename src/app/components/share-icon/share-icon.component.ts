@@ -29,7 +29,8 @@ export class FsShareIconComponent implements OnInit, OnChanges, OnDestroy {
   @Input() public platform: Platform;
   @Input() public size: number = 20;
   @Input() public color;
-  @Input() public iconOrigin: string;
+  @Input() public origin: string;
+  @Input() public url: string;
 
   public svg: SafeHtml;
 
@@ -53,8 +54,12 @@ export class FsShareIconComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  public get url() {
-    const url = new URL(`/assets/@firestitch/share/${this.platform}.svg`, this.iconOrigin || location.origin);
+  public get svgUrl() {
+    if(this.url) {
+      return this.url;
+    }
+
+    const url = new URL(`/assets/@firestitch/share/${this.platform}.svg`, this.origin || location.origin);
     return url.toString();
   }
 
