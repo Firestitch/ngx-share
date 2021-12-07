@@ -11,16 +11,17 @@
       class="button-container" 
       [class]="shape + ' ' + platform" 
       [ngClass]="{ 'show-label': showLabel }"      
-      [style.paddingTop]="((size / 100) + 7) + 'px'"
-      [style.paddingBottom]="((size / 100) + 7) + 'px'"
-      [style.paddingLeft]="((size / 100) + (showLabel ? 10 : 7)) + 'px'"
-      [style.paddingRight]="((size / 100) + (showLabel ? 10 : 7)) + 'px'">
+      [style.paddingTop]="((size / 15)) + 'px'"
+      [style.paddingBottom]="((size / 15) ) + 'px'"
+      [style.paddingLeft]="((size / 15) + (showLabel ? (size / 15) : 0)) + 'px'"
+      [style.paddingRight]="((size / 15) + (showLabel ? (size / 15) : 0)) + 'px'">
     <fs-share-icon 
       class="icon"
       [size]="iconSize ? iconSize : (size / 100) * 20"
       *ngIf="showIcon"
       [color]="color"
-      [platform]="platform">
+      [platform]="platform"
+      [iconOrigin]="iconOrigin">
     </fs-share-icon>
     <span 
         class="label" 

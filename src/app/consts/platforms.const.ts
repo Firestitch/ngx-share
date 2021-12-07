@@ -14,5 +14,5 @@ export const Platforms = [
   { value: Platform.Tumblr, name: 'Tumblr', color: '#36465D' },
   { value: Platform.Email, name: 'Email', color: '#6067D0' },
   { value: Platform.Copy, name: 'Copy', color: '#607D8B' },
-  { value: Platform.Any, name: 'Other', color: '#4267B2' },
+  { value: Platform.Any, name: 'Other', color: '#F2614A' },
 ]

@@ -2,7 +2,7 @@
   "name": "@firestitch/share",
   "title": "Share",
   "description": "@firestitch/share",
-  "version": "12.0.2",
+  "version": "12.0.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-share"
@@ -69,7 +69,8 @@
     "tslint": "~6.1.0",
     "typescript": "4.2.4",
     "url-polyfill": "^1.1.7",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "hex-to-css-filter": "^5.2.0"
   },
   "engines": {
     "node": ">=6.0.0"

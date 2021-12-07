@@ -1,4 +1,4 @@
-import { Input, Component, OnInit } from '@angular/core';
+import { Input, Component } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
@@ -12,7 +12,7 @@ import { ShareEvent } from '../../interfaces/share-event.interface';
   templateUrl: './share-button.component.html',
   styleUrls: ['./share-button.component.scss'],
 })
-export class FsShareButtonComponent implements OnInit {
+export class FsShareButtonComponent {
 
   @Input() public platform: Platform;
   @Input() public description = '';
@@ -21,7 +21,7 @@ export class FsShareButtonComponent implements OnInit {
   @Input() public image = '';
   @Input() public showLabel = true;
   @Input() public showIcon = true;
-  @Input() public iconUrl = '';
+  @Input() public iconOrigin = '';
   @Input() public color = '#ffffff';
   @Input() public href;
   @Input() public beforeOpen: (shareEvent: ShareEvent) => Observable<any> | any;
@@ -34,11 +34,5 @@ export class FsShareButtonComponent implements OnInit {
 
   constructor(private _shareService: FsShareService) {
     this.platformNames = this._shareService.platformNames;
-  }
-
-  public ngOnInit(): void {
-    if (!this.iconUrl) {
-      this.iconUrl = '/assets/@firestitch/share/' + this.platform + '.svg';
-    }
   }
 }

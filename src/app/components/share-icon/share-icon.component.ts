@@ -2,16 +2,20 @@ import {
   Component,
   ChangeDetectionStrategy,
   ElementRef,
-  OnInit,
-  ViewChild,
   Input,
   OnChanges,
   SimpleChanges,
+  OnDestroy,
+  ChangeDetectorRef,
+  OnInit,
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+import { Subject } from 'rxjs';
 
 import { Platform } from '../../enums/platform.emun';
 import { Platforms } from '../../consts/platforms.const';
+import { hexToCSSFilter } from '../../models/hex-to-css-filter';
 
 
 @Component({
@@ -20,51 +24,59 @@ import { Platforms } from '../../consts/platforms.const';
   styleUrls: ['./share-icon.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FsShareIconComponent implements OnChanges, OnInit {
-
-  @ViewChild('object1', { static: true })
-  public objectRef: ElementRef;
+export class FsShareIconComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() public platform: Platform;
   @Input() public size: number = 20;
-  @Input() public color: string;
+  @Input() public color;
+  @Input() public iconOrigin: string;
 
+  public svg: SafeHtml;
+
+  private _destroy$ = new Subject();
+  
   constructor(
     private _sanitizer: DomSanitizer,
+    private _cdRef: ChangeDetectorRef,
+    private _el: ElementRef,
   ) {}
 
-  public get dataUrl() {
-    return this._sanitizer
-      .bypassSecurityTrustResourceUrl(`/assets/@firestitch/share/${this.platform}.svg`);
+  public ngOnInit(): void {
+    if(!this.color) {
+     const platform = Platforms.find((item) => {
+      return item.value === this.platform;
+     }); 
+
+     if(platform) {
+       this.setColor(platform.color);
+     }
+    }
   }
 
-  public ngOnInit(): void {
-    this.setColor(this.color);
+  public get url() {
+    const url = new URL(`/assets/@firestitch/share/${this.platform}.svg`, this.iconOrigin || location.origin);
+    return url.toString();
+  }
+
+  public get dataUrl() {
+    return this._sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if(changes.color) {
+    if(changes.color?.currentValue) {
       this.setColor(changes.color.currentValue);
     }     
   }
-  
-  public setColor(color) {
-    this.objectRef.nativeElement
-    .addEventListener('load', (event) => {
-      event.target.getSVGDocument().querySelectorAll('path')
-        .forEach((el) => {
-          if(!color) {
-            const platform = Platforms
-            .find((item) => (String(this.platform) === String(item.value)));
-      
-            if(platform) {
-              color = platform.color;
-            }      
-          }               
 
-          el.setAttribute('fill', color || '#ffffff');
-        });
-    });    
+  public setColor(hex) {
+    const cssFilter = hexToCSSFilter(hex);
+    const filter = cssFilter.filter.replace(/;$/is, '');
+    this._el.nativeElement.style.setProperty('--icon-filter', filter);    
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
 }
