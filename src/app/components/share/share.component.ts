@@ -2,7 +2,7 @@ import { Input, OnDestroy, Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { Subject, Observable, of } from 'rxjs';
-import { takeUntil, switchMap } from 'rxjs/operators';
+import { takeUntil, switchMap, filter } from 'rxjs/operators';
 
 import { ClipboardService } from 'ngx-clipboard';
 
@@ -58,10 +58,12 @@ export class FsShareComponent implements OnDestroy, OnInit {
         const result = this.beforeOpen ? this.beforeOpen({ platform: this.platform }) : true;
         return result instanceof Observable ? result : of(true);
       }),
+      filter((result) => !!result),
       switchMap(() => {
         const result = this.open ? this.open({ platform: this.platform }) : true;
         return result instanceof Observable ? result : of(true); 
       }),
+      filter((result) => !!result),
       takeUntil(this._destory$),
     )
     .subscribe(() => {
