@@ -12,6 +12,7 @@ export abstract class Share {
   public config: ShareConfig;
 
   public abstract platform: Platform;
+  public navigatorShare = true;
 
   public abstract createUrl(): URL;
   public abstract getMethod(): Method;
@@ -61,6 +62,8 @@ export abstract class Share {
 
       if (value) {
         url.searchParams.append(param, value);
+      } else {
+        url.searchParams.append(key, param);
       }
     });
 
@@ -70,7 +73,7 @@ export abstract class Share {
   public open(): Observable<any> {
     return new Observable((observer) => {
       const navigator = (window as any).navigator;
-      if (this._deviceDetectorService.isMobile() && navigator.share) {
+      if (this.navigatorShare && this._deviceDetectorService.isMobile() && navigator?.share) {
         navigator.share({
           title: this.config.title,
           text: this.config.description,
@@ -84,7 +87,6 @@ export abstract class Share {
           });
 
       } else {
-
         const w: Window = window;
         const width = 800;
         const height = 500;
@@ -103,16 +105,20 @@ export abstract class Share {
         ];
 
         const win = window.open(this.createUrl().toString(), '_system', options.join(','));
-        const timer = (<any>window).setInterval(() => {
-          if (win.closed !== false) {
-            window.clearInterval(timer);
-            observer.next(true);
-            observer.complete();
-          }
-        }, 200);
+        if(win) {
+          const timer = (<any>window).setInterval(() => {
+            if (win.closed !== false) {
+              window.clearInterval(timer);
+              observer.next(true);
+              observer.complete();
+            }
+          }, 200);
 
-        if (win && win.focus) {
-          win.focus();
+          if (win && win.focus) {
+            win.focus();
+          }
+        } else {
+          console.error('Failed to window.open');
         }
       }
 

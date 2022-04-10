@@ -34,8 +34,10 @@ export class KitchenSinkComponent implements OnInit {
   }
 
   public ngOnInit() {
+    const url = window.location.hostname === 'localhost' ? 'https://google.com' : window.location.toString();
+
     this.config = {
-      url: window.location.toString(),
+      url,
       title: 'Title',
       image: 'https://www.petmd.com/sites/default/files/petmd-puppy-weight.jpg',
       description: 'Description',

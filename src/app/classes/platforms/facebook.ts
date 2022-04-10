@@ -7,6 +7,7 @@ import { Method } from '../../enums/method.enum';
 export class FacebookShare extends Share {
 
   public platform = Platform.Facebook;
+  public navigatorShare = false;
 
   public createUrl() {
     const url = 'https://www.facebook.com/sharer/sharer.php';
@@ -21,11 +22,8 @@ export class FacebookShare extends Share {
     return Method.Dialog;
   }
 
-
   public open() {
-
     return new Observable((observer) => {
-
       this._cordovaPlatformSupported(Platform.Facebook)
       .subscribe(() => {
 
