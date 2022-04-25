@@ -73,17 +73,20 @@ export abstract class Share {
   public open(): Observable<any> {
     return new Observable((observer) => {
       const navigator = (window as any).navigator;
-      if (this.navigatorShare && this._deviceDetectorService.isMobile() && navigator?.share) {
-        navigator.share({
-          title: this.config.title,
-          text: this.config.description,
-          url: this.config.url,
-        })
+
+      const shareData = {
+        title: this.config.title,
+        text: this.config.description,
+        url: this.config.url,
+      };
+
+      if (this.navigatorShare && this._deviceDetectorService.isMobile() && navigator.canShare && navigator.canShare(shareData)) {
+        navigator.share()
           .then(() => {
 
           })
           .catch((error) => {
-
+            console.log('Sharing Error', error);
           });
 
       } else {
@@ -104,21 +107,21 @@ export abstract class Share {
           'left=' + left
         ];
 
-        const win = window.open(this.createUrl().toString(), '_system', options.join(','));
-        if(win) {
+        const windowProxy = window.open(this.createUrl().toString(), '_system', options.join(','));
+        if(windowProxy) {
           const timer = (<any>window).setInterval(() => {
-            if (win.closed !== false) {
+            if (windowProxy.closed !== false) {
               window.clearInterval(timer);
               observer.next(true);
               observer.complete();
             }
           }, 200);
 
-          if (win && win.focus) {
-            win.focus();
+          if (windowProxy && windowProxy.focus) {
+            windowProxy.focus();
           }
         } else {
-          console.error('Failed to window.open');
+          console.log('Failed to window.open');
         }
       }
 
