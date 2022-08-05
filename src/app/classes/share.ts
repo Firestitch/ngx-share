@@ -1,7 +1,6 @@
 import { Platform } from '../enums/platform.emun';
 import { ShareConfig } from '../interfaces';
 import { Observable } from 'rxjs';
-import { forOwn } from 'lodash-es';
 import { Platforms } from '../consts/platforms.const';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Method } from '../enums/method.enum';
@@ -57,15 +56,17 @@ export abstract class Share {
       image: this.config.image
     };
 
-    forOwn(params, (param, key) => {
-      const value = data[key];
+    Object.keys(params)
+      .forEach((key)=> {
+        const param = params[key];
+        const value = data[key];
 
-      if (value) {
-        url.searchParams.append(param, value);
-      } else {
-        url.searchParams.append(key, param);
-      }
-    });
+        if (value) {
+          url.searchParams.append(param, value);
+        } else {
+          url.searchParams.append(key, param);
+        }
+      });
 
     return url;
   }

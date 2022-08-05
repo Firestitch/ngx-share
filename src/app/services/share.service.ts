@@ -1,9 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
+
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
-import { ShareConfig } from '../interfaces';
-import { Platform } from '../enums/platform.emun';
+
+import { DeviceDetectorService } from 'ngx-device-detector';
+
 import { 
   AnyShare,
   FacebookShare,
@@ -18,11 +20,12 @@ import {
   PinterestShare,
   InstagramShare,
   SnapchatShare,
-  EmailShare
+  EmailShare,
+  TikTokShare
 } from '../classes/platforms';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { Platforms } from '../consts/platforms.const';
-import { transform } from 'lodash-es';
+import { ShareConfig } from '../interfaces';
+import { Platform } from '../enums/platform.emun';
 
 
 @Injectable()
@@ -75,6 +78,9 @@ export class FsShareService implements OnDestroy {
       case Platform.Instagram:
         return new InstagramShare(config, this._device);
 
+      case Platform.TikTok:
+        return new TikTokShare(config, this._device);
+
       case Platform.Snapchat:
         return new SnapchatShare(config, this._device);
       
@@ -95,8 +101,11 @@ export class FsShareService implements OnDestroy {
   public get platformNames() {
 
     if (!this._platformNames) {
-      this._platformNames = transform(Platforms, (result, value) => {
-        result[value.value] = value.name;
+      this._platformNames = Platforms.reduce((accum, value) => {
+        return {
+          ...accum,
+          [value.value]: value.name,
+        };
       }, {});
     }
 

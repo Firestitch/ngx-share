@@ -10,6 +10,7 @@ export enum Platform {
   Instagram = 'instagram',
   Tumblr = 'tumblr',
   Snapchat = 'snapchat',
+  TikTok = 'tiktok',
   Copy = 'copy',
   Email = 'email',
   Any = 'any'

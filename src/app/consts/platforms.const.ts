@@ -11,6 +11,7 @@ export const Platforms = [
   { value: Platform.Messenger, name: 'Messenger', color: '#0080FF' },
   { value: Platform.Instagram, name: 'Instagram', color: '#FF6F91' },
   { value: Platform.Snapchat, name: 'Snapchat', color: '#F7F40D' },
+  { value: Platform.TikTok, name: 'TikTok', color: '#0D0C0A' },
   { value: Platform.Tumblr, name: 'Tumblr', color: '#36465D' },
   { value: Platform.Email, name: 'Email', color: '#6067D0' },
   { value: Platform.Copy, name: 'Copy', color: '#607D8B' },

@@ -49,7 +49,7 @@ export class FsShareComponent implements OnDestroy, OnInit {
     }, {});
   }
 
-  public click(event: KeyboardEvent) {
+  public click(event: MouseEvent) {
     event.preventDefault();
 
     of(true)

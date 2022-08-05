@@ -19,7 +19,7 @@ export class KitchenSinkComponent implements OnInit {
 
   public config: ShareConfig = {};
   public platforms = Platforms;
-  public shape = 'square';
+  public shape: any = 'square';
   public size = 100;
   public iconSize;
   public iconColor = '#ffffff';

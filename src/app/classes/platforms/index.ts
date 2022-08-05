@@ -12,3 +12,4 @@ export * from './pinterest';
 export * from './instagram';
 export * from './snapchat';
 export * from './email';
+export * from './tik-tock';
