@@ -4,8 +4,6 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Subject, Observable, of } from 'rxjs';
 import { takeUntil, switchMap, filter } from 'rxjs/operators';
 
-import { ClipboardService } from 'ngx-clipboard';
-
 import { FsShareService } from '../../services/share.service';
 import { Platform } from '../../enums/platform.emun';
 import { Platforms } from '../../consts/platforms.const';
@@ -40,7 +38,6 @@ export class FsShareComponent implements OnDestroy, OnInit {
   constructor(
     private _shareService: FsShareService,
     private _sanitizer: DomSanitizer,
-    private _clipboardService: ClipboardService,
   ) {
     this.platformNames = Platforms.reduce((result, value) => {
       result[value.value] = value.name;
@@ -68,7 +65,7 @@ export class FsShareComponent implements OnDestroy, OnInit {
     )
     .subscribe(() => {
       if (this.platform === Platform.Copy) {
-        this._clipboardService.copyFromContent(this._share.config.url);
+        navigator.clipboard.writeText(this._share.config.url);
 
       } else if (this._share.getMethod() === Method.MetaRefesh) {
         this._metaRefresh();
