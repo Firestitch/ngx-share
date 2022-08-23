@@ -16,7 +16,7 @@ export class TikTokShare extends Share {
   }
 
   public createUrl() {
-    const url = 'tiktok://camera';
+    const url = 'https://tiktok.com';
     const params = {};
 
     return this._createUrl(url, params);
