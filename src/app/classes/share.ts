@@ -82,12 +82,12 @@ export abstract class Share {
       };
 
       if (this.navigatorShare && this._deviceDetectorService.isMobile() && navigator.canShare && navigator.canShare(shareData)) {
-        navigator.share()
+        navigator.share(shareData)
           .then(() => {
 
           })
           .catch((error) => {
-            console.log('Sharing Error', error);
+            console.log('Open Sharing Error', error);
           });
 
       } else {
