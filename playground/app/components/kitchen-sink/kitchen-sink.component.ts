@@ -3,10 +3,11 @@ import { KitchenSinkConfigureComponent } from '../kitchen-sink-configure';
 import { FsExampleComponent } from '@firestitch/example';
 import { FsMessage } from '@firestitch/message';
 import { ShareConfig } from 'src/app/interfaces';
-import { Platforms } from '@firestitch/package';
+import { Platforms, Platform } from '@firestitch/package';
 import { ShareEvent } from 'src/app/interfaces/share-event.interface';
-import { of, throwError } from 'rxjs';
-import { delay, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
+import { FsShareService } from 'src/app/services';
 
 
 @Component({
@@ -28,7 +29,8 @@ export class KitchenSinkComponent implements OnInit {
 
   constructor(
     private exampleComponent: FsExampleComponent,
-    private _message: FsMessage
+    private _message: FsMessage,
+    private _share: FsShareService,
   ) {
     exampleComponent.setConfigureComponent(KitchenSinkConfigureComponent, { config: this.config });
   }
@@ -59,6 +61,15 @@ export class KitchenSinkComponent implements OnInit {
     .pipe(
       delay(1000),
     );
+  };
+
+  public openShare() {
+    this._share.openDialog([
+      Platform.Copy,
+      Platform.Facebook,
+      Platform.Twitter,
+    ],
+    this.config);
   };
 
   public beforeOpen = (shareEvent: ShareEvent) => {

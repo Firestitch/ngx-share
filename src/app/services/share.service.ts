@@ -26,26 +26,20 @@ import {
 import { Platforms } from '../consts/platforms.const';
 import { ShareConfig } from '../interfaces';
 import { Platform } from '../enums/platform.emun';
+import { MatDialog } from '@angular/material/dialog';
+import { ShareDialogComponent } from '../components';
 
 
 @Injectable()
-export class FsShareService implements OnDestroy {
+export class FsShareService {
 
-  public twitterAvailable = false;
-  public facebookAvailable = false;
-
-  private onDestroy$ = new Subject();
-  private onPlatformsChecked$ = new BehaviorSubject<any>(null);
   private _platformNames;
 
   constructor(
-    private _device: DeviceDetectorService
+    private _device: DeviceDetectorService,    
+    private _dialog: MatDialog,
   ) {}
-
-  open(platform: Platform, config: ShareConfig): Observable<any> {
-    return this.createShare(platform, config).open();
-  }
-
+  
   public createShare(platform: Platform, config: ShareConfig) {
     switch (platform) {
       case Platform.Facebook:
@@ -112,10 +106,13 @@ export class FsShareService implements OnDestroy {
     return this._platformNames;
   }
 
-  ngOnDestroy() {
-    this.onDestroy$.next();
-    this.onDestroy$.complete();
-    this.onPlatformsChecked$.complete();
+  public openDialog(platforms: Platform[], shareConfig: ShareConfig) {
+    this._dialog.open(ShareDialogComponent, {
+      data: {
+        shareConfig,
+        platforms,
+      }
+    });
   }
 
 }
