@@ -6,6 +6,7 @@ export interface ShareConfig {
   title?: string;
   description?: string;
   image?: string;
+  dialogTitle?: string,
   success? (shareEvent: ShareEvent);
   open? (shareEvent: ShareEvent);
   beforeOpen? (shareEvent: ShareEvent);
