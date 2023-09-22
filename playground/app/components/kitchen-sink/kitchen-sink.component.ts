@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { KitchenSinkConfigureComponent } from '../kitchen-sink-configure';
 import { FsExampleComponent } from '@firestitch/example';
 import { FsMessage } from '@firestitch/message';
-import { ShareConfig } from 'src/app/interfaces';
-import { Platforms, Platform } from '@firestitch/package';
-import { ShareEvent } from 'src/app/interfaces/share-event.interface';
+import { Platform, Platforms } from '@firestitch/package';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { ShareConfig } from 'src/app/interfaces';
+import { ShareEvent } from 'src/app/interfaces/share-event.interface';
 import { FsShareService } from 'src/app/services';
 
 
@@ -32,7 +31,6 @@ export class KitchenSinkComponent implements OnInit {
     private _message: FsMessage,
     private _share: FsShareService,
   ) {
-    exampleComponent.setConfigureComponent(KitchenSinkConfigureComponent, { config: this.config });
   }
 
   public ngOnInit() {
@@ -58,9 +56,9 @@ export class KitchenSinkComponent implements OnInit {
     }
 
     return of(true)
-    .pipe(
-      delay(1000),
-    );
+      .pipe(
+        delay(1000),
+      );
   };
 
   public openShare() {
@@ -69,7 +67,7 @@ export class KitchenSinkComponent implements OnInit {
       Platform.Facebook,
       Platform.Twitter,
     ],
-    this.config);
+      this.config);
   };
 
   public beforeOpen = (shareEvent: ShareEvent) => {
