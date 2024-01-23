@@ -2,7 +2,7 @@ import { Platform } from '../enums/platform.emun';
 
 export const Platforms = [
   { value: Platform.Facebook, name: 'Facebook', color: '#4267B2' },
-  { value: Platform.Twitter, name: 'Twitter', color: '#00acee' },
+  { value: Platform.Twitter, name: 'Twitter', color: '#0D0C0A' },
   { value: Platform.LinkedIn, name: 'LinkedIn', color: '#006fa6' },
   { value: Platform.Pinterest, name: 'Pinterest', color: '#E6001A' },
   { value: Platform.WhatsApp, name: 'WhatsApp', color: '#25D366' },
