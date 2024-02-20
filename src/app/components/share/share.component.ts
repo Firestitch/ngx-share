@@ -1,21 +1,22 @@
-import { Input, OnDestroy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
-import { Subject, Observable, of } from 'rxjs';
-import { takeUntil, switchMap, filter } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
 
-import { FsShareService } from '../../services/share.service';
-import { Platform } from '../../enums/platform.emun';
-import { Platforms } from '../../consts/platforms.const';
-import { ShareConfig } from '../../interfaces';
 import { Share } from '../../classes/share';
+import { Platforms } from '../../consts/platforms.const';
 import { Method } from '../../enums/method.enum';
+import { Platform } from '../../enums/platform.emun';
+import { ShareConfig } from '../../interfaces';
 import { ShareEvent } from '../../interfaces/share-event.interface';
+import { FsShareService } from '../../services/share.service';
 
 
 @Component({
   selector: 'fs-share',
   templateUrl: './share.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FsShareComponent implements OnDestroy, OnInit {
 
