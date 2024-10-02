@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
 
-import { Platform } from '../../enums';
-import { ShareConfig } from '../../interfaces';
+import { Platform } from '../../enums/platform.emun';
+import { ShareConfig } from '../../interfaces/share-config.interface';
 
 
 @Component({

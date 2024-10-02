@@ -1,6 +1,7 @@
-import { Share } from '../share';
-import { Platform } from '../../enums/platform.emun';
 import { Method } from '../../enums/method.enum';
+import { Platform } from '../../enums/platform.emun';
+import { isMobile } from '../../helpers';
+import { Share } from '../share';
 
 
 export class TikTokShare extends Share {
@@ -8,7 +9,7 @@ export class TikTokShare extends Share {
   public platform = Platform.TikTok;
 
   public appSupported() {
-    return this._deviceDetectorService.isMobile() || this._deviceDetectorService.isTablet();
+    return isMobile();
   }
 
   public webSupported() {

@@ -1,9 +1,9 @@
-import { Platform } from '../enums/platform.emun';
-import { ShareConfig } from '../interfaces';
 import { Observable } from 'rxjs';
 import { Platforms } from '../consts/platforms.const';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { Method } from '../enums/method.enum';
+import { Platform } from '../enums/platform.emun';
+import { isMobile } from '../helpers';
+import { ShareConfig } from '../interfaces';
 
 
 export abstract class Share {
@@ -16,14 +16,10 @@ export abstract class Share {
   public abstract createUrl(): URL;
   public abstract getMethod(): Method;
 
-  protected _deviceDetectorService: DeviceDetectorService;
-  
   constructor(
     config: ShareConfig, 
-    deviceDetectorService: DeviceDetectorService
   ) {
     this.config = config;
-    this._deviceDetectorService = deviceDetectorService;
   }
 
   public getPlatformName() {
@@ -81,7 +77,7 @@ export abstract class Share {
         url: this.config.url,
       };
 
-      if (this.navigatorShare && this._deviceDetectorService.isMobile() && navigator.canShare && navigator.canShare(shareData)) {
+      if (this.navigatorShare && isMobile() && navigator.canShare && navigator.canShare(shareData)) {
         navigator.share(shareData)
           .then(() => {
 

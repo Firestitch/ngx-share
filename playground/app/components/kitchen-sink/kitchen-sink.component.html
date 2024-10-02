@@ -1,4 +1,4 @@
-<div fxLayout="row wrap">
+<div class="fs-row.gap-xs.wrap">
   <fs-share
     *ngFor="let platform of platforms"
     [platform]="platform.value"
@@ -18,7 +18,7 @@
 
 <br><br>
 
-<div fxLayout="row wrap" class="field-row">
+<div class="fs-row.gap-xs.wrap">
   <mat-form-field>
     <mat-select
         [(ngModel)]="shape"
@@ -76,7 +76,7 @@
 
 </div>
 
-<div fxLayout="row wrap">
+<div class="fs-row.wrap">
   <fs-share-button
     [platform]="item.value"
     [title]="config.title"

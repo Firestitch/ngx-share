@@ -1,13 +1,14 @@
-import { Share } from '../share';
-import { Platform } from '../../enums/platform.emun';
 import { Method } from '../../enums/method.enum';
+import { Platform } from '../../enums/platform.emun';
+import { isMobile } from '../../helpers';
+import { Share } from '../share';
 
 export class MessengerShare extends Share {
 
   public platform = Platform.Messenger
 
   public appSupported() {
-    return this._deviceDetectorService.isMobile() || this._deviceDetectorService.isTablet();
+    return isMobile();
   }
 
   public webSupported() {
@@ -15,7 +16,7 @@ export class MessengerShare extends Share {
   }
 
   public createUrl() {
-    if(this._deviceDetectorService.isMobile() || this._deviceDetectorService.isTablet()) {
+    if(isMobile()) {
       return this.createMobileUrl();
     } else {
       return this.createDesktopUrl();

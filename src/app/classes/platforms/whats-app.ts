@@ -1,6 +1,7 @@
-import { Share } from '../share';
-import { Platform } from '../../enums/platform.emun';
 import { Method } from '../../enums/method.enum';
+import { Platform } from '../../enums/platform.emun';
+import { isMobile } from '../../helpers';
+import { Share } from '../share';
 
 export class WhatsAppShare extends Share {
 
@@ -22,6 +23,6 @@ export class WhatsAppShare extends Share {
   }
 
   public isMobile() {
-    return this._deviceDetectorService.isMobile() || this._deviceDetectorService.isTablet();
+    return isMobile();
   }
 }

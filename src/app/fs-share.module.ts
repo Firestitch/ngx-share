@@ -1,15 +1,14 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
-import { FsShareService } from './services/share.service';
 import { FsShareButtonComponent } from './components/share-button/share-button.component';
-import { FsShareComponent } from './components/share/share.component';
+import { ShareDialogComponent } from './components/share-dialog/share-dialog.component';
 import { FsShareIconComponent } from './components/share-icon/share-icon.component';
-import { DeviceDetectorService } from 'ngx-device-detector';
-import { ShareDialogComponent } from './components';
+import { FsShareComponent } from './components/share/share.component';
+import { FsShareService } from './services/share.service';
 
 
 @NgModule({
@@ -30,9 +29,6 @@ import { ShareDialogComponent } from './components';
     FsShareIconComponent,
     ShareDialogComponent,
   ],
-  providers: [
-    DeviceDetectorService,
-  ]
 })
 export class FsShareModule {
   static forRoot(): ModuleWithProviders<FsShareModule> {

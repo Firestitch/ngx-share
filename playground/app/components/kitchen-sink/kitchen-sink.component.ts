@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { ShareConfig } from 'src/app/interfaces';
 import { ShareEvent } from 'src/app/interfaces/share-event.interface';
-import { FsShareService } from 'src/app/services';
+import { FsShareService } from 'src/app/services/share.service';
 
 
 @Component({

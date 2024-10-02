@@ -1,20 +1,20 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
   ElementRef,
   Input,
   OnChanges,
-  SimpleChanges,
   OnDestroy,
-  ChangeDetectorRef,
   OnInit,
+  SimpleChanges,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { Subject } from 'rxjs';
 
-import { Platform } from '../../enums/platform.emun';
 import { Platforms } from '../../consts/platforms.const';
+import { Platform } from '../../enums/platform.emun';
 import { hexToCSSFilter } from '../../models/hex-to-css-filter';
 
 
@@ -75,7 +75,7 @@ export class FsShareIconComponent implements OnInit, OnChanges, OnDestroy {
 
   public setColor(hex) {
     const cssFilter = hexToCSSFilter(hex);
-    const filter = cssFilter.filter.replace(/;$/is, '');
+    const filter = cssFilter.filter.replace(/;$/i, '');
     this._el.nativeElement.style.setProperty('--icon-filter', filter);    
   }
 

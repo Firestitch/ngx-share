@@ -1,8 +1,8 @@
-import { Input, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { FsShareService } from '../../services/share.service';
+import { Platforms } from '../../consts/platforms.const';
 import { Platform } from '../../enums/platform.emun';
 import { ShareEvent } from '../../interfaces/share-event.interface';
 
@@ -11,6 +11,7 @@ import { ShareEvent } from '../../interfaces/share-event.interface';
   selector: 'fs-share-button',
   templateUrl: './share-button.component.html',
   styleUrls: ['./share-button.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FsShareButtonComponent {
 
@@ -31,9 +32,14 @@ export class FsShareButtonComponent {
   @Input() public iconSize: number;
   @Input() public size: number;
 
-  public platformNames = [];
+  public platformNames = {};
 
-  constructor(private _shareService: FsShareService) {
-    this.platformNames = this._shareService.platformNames;
+  constructor() {
+    this.platformNames = Platforms.reduce((accum, value) => {
+      return {
+        ...accum,
+        [value.value]: value.name,
+      };
+    }, {})
   }
 }

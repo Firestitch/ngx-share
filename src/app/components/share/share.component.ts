@@ -8,9 +8,9 @@ import { Share } from '../../classes/share';
 import { Platforms } from '../../consts/platforms.const';
 import { Method } from '../../enums/method.enum';
 import { Platform } from '../../enums/platform.emun';
-import { ShareConfig } from '../../interfaces';
+import { createShare } from '../../helpers/create-share';
+import { ShareConfig } from '../../interfaces/share-config.interface';
 import { ShareEvent } from '../../interfaces/share-event.interface';
-import { FsShareService } from '../../services/share.service';
 
 
 @Component({
@@ -37,7 +37,6 @@ export class FsShareComponent implements OnDestroy, OnInit {
   private _share: Share;
 
   constructor(
-    private _shareService: FsShareService,
     private _sanitizer: DomSanitizer,
   ) {
     this.platformNames = Platforms.reduce((result, value) => {
@@ -110,7 +109,7 @@ export class FsShareComponent implements OnDestroy, OnInit {
       image: this.image
     }
 
-    this._share = this._shareService.createShare(this.platform, config);
+    this._share = createShare(this.platform, config);
 
     if (this._share.getMethod() === Method.Href && !this.href) {
       this.href = this._share.createUrl().toString();
