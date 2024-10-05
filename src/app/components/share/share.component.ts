@@ -140,7 +140,7 @@ export class FsShareComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy() {
-    this._destory$.next();
+    this._destory$.next(null);
     this._destory$.complete();
   }
 }

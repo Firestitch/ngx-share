@@ -152,7 +152,7 @@ export abstract class Share {
           domain,
           'msg', null, null, null,
           e => {
-            observer.next();
+            observer.next(null);
             observer.complete();
           },
           e => {
