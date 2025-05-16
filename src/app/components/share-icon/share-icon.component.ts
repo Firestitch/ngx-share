@@ -44,13 +44,13 @@ export class FsShareIconComponent implements OnInit, OnChanges, OnDestroy {
 
   public ngOnInit(): void {
     if(!this.color) {
-     const platform = Platforms.find((item) => {
-      return item.value === this.platform;
-     }); 
+      const platform = Platforms.find((item) => {
+        return item.value === this.platform;
+      }); 
 
-     if(platform) {
-       this.setColor(platform.color);
-     }
+      if(platform) {
+        this.setColor(platform.color);
+      }
     }
   }
 
@@ -59,7 +59,8 @@ export class FsShareIconComponent implements OnInit, OnChanges, OnDestroy {
       return this.url;
     }
 
-    const url = new URL(`/assets/@firestitch/share/${this.platform}.svg`, this.origin || location.origin);
+    const url = new URL(`/assets/share/${this.platform}.svg`, this.origin || location.origin);
+
     return url.toString();
   }
 

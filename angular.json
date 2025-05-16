@@ -24,7 +24,7 @@
               { 
                 "glob": "**/*", 
                 "input": "./src/app/assets", 
-                "output": "./assets/@firestitch/share" 
+                "output": "./assets/share" 
               }
             ],
             "styles": [
