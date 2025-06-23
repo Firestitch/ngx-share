@@ -4,18 +4,18 @@
     [image]="image"
     [href]="href"
     [description]="description"
-    [open]="open"
+    [afterOpen]="afterOpen"
     [beforeOpen]="beforeOpen"
     [platform]="platform">
-  <span 
-      class="button-container" 
-      [class]="shape + ' ' + platform" 
-      [ngClass]="{ 'show-label': showLabel }"      
+  <span
+      class="button-container"
+      [class]="shape + ' ' + platform"
+      [ngClass]="{ 'show-label': showLabel }"
       [style.paddingTop]="((size / 15)) + 'px'"
       [style.paddingBottom]="((size / 15) ) + 'px'"
       [style.paddingLeft]="((size / 15) + (showLabel ? (size / 15) : 0)) + 'px'"
       [style.paddingRight]="((size / 15) + (showLabel ? (size / 15) : 0)) + 'px'">
-    <fs-share-icon 
+    <fs-share-icon
       class="icon"
       [size]="iconSize ? iconSize : (size / 100) * 20"
       *ngIf="showIcon"
@@ -24,11 +24,11 @@
       [origin]="iconOrigin"
       [url]="iconUrl">
     </fs-share-icon>
-    <span 
-        class="label" 
-        *ngIf="showLabel && platformNames[platform]" 
+    <span
+        class="label"
+        *ngIf="showLabel && platformNames[platform]"
         [ngStyle]="{ 'font-size': size + '%', color: color }">
-      {{platformNames[platform]}}
+      {{ platformNames[platform] }}
     </span>
- </span>
+  </span>
 </fs-share>

@@ -1,7 +1,7 @@
-import { Share } from '../share';
-import { Platform } from '../../enums/platform.emun';
-import { Observable } from 'rxjs';
+
 import { Method } from '../../enums/method.enum';
+import { Platform } from '../../enums/platform.emun';
+import { Share } from '../share';
 
 
 export class FacebookShare extends Share {
@@ -12,7 +12,7 @@ export class FacebookShare extends Share {
   public createUrl() {
     const url = 'https://www.facebook.com/sharer/sharer.php';
     const params = {
-      url: 'u'
+      url: 'u',
     };
 
     return this._createUrl(url, params);
@@ -20,33 +20,5 @@ export class FacebookShare extends Share {
 
   public getMethod() {
     return Method.Dialog;
-  }
-
-  public open() {
-    return new Observable((observer) => {
-      this._cordovaPlatformSupported(Platform.Facebook)
-      .subscribe(() => {
-
-        (<any>window).plugins.socialsharing.shareViaFacebook(
-          '',
-          null,
-          this.config.url,
-          (response) => {
-            observer.next(response);
-            observer.complete();
-          },
-          (errormsg) => {
-            observer.error(errormsg);
-          }
-        );
-
-      }, () => {
-        super.open()
-        .subscribe((response) => {
-          observer.next(response);
-          observer.complete();
-        });
-      });
-    });
   }
 }

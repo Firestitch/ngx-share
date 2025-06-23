@@ -15,11 +15,11 @@ export class WhatsAppShare extends Share {
   }
 
   public getMethod() {
-    return this.isMobile() ? Method.MetaRefesh : Method.Dialog;
+    return Method.Dialog;
   }
 
   public buildDecription() {
-    return this.config.description + '\n' + this.config.url;
+    return `${this.config.description}\n${this.config.url}`;
   }
 
   public isMobile() {

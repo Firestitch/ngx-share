@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@a
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { Observable, Subject, of } from 'rxjs';
-import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { Share } from '../../classes/share';
 import { Platforms } from '../../consts/platforms.const';
@@ -20,14 +20,14 @@ import { ShareEvent } from '../../interfaces/share-event.interface';
 })
 export class FsShareComponent implements OnDestroy, OnInit {
 
-  @Input() platform: Platform;
-  @Input() description = '';
-  @Input() title = '';
-  @Input() url = '';
-  @Input() image = '';
-  @Input() href = '';
-  @Input() beforeOpen: (shareEvent: ShareEvent) => Observable<any> | any;
-  @Input() open: (shareEvent: ShareEvent) => Observable<any> | any;
+  @Input() public platform: Platform;
+  @Input() public description = '';
+  @Input() public title = '';
+  @Input() public url = '';
+  @Input() public image = '';
+  @Input() public href = '';
+  @Input() public beforeOpen: (shareEvent: ShareEvent) => Observable<void|{ url: string }>;
+  @Input() public afterOpen: (event: { platform: Platform }) => Observable<any>;
 
   public platformNames = {};
   public show = true;
@@ -46,59 +46,34 @@ export class FsShareComponent implements OnDestroy, OnInit {
     }, {});
   }
 
-  public click(event: MouseEvent) {
-    event.preventDefault();
+  public click(mouseEvent: MouseEvent) {
+    mouseEvent.preventDefault();
 
     of(true)
-    .pipe(
-      switchMap(() => {
-        const result = this.beforeOpen ? this.beforeOpen({ platform: this.platform }) : true;
-        return result instanceof Observable ? result : of(true);
-      }),
-      filter((result) => !!result),
-      switchMap(() => {
-        const result = this.open ? this.open({ platform: this.platform }) : true;
-        return result instanceof Observable ? result : of(true); 
-      }),
-      filter((result) => !!result),
-      takeUntil(this._destory$),
-    )
-    .subscribe(() => {
-      if (this.platform === Platform.Copy) {
-        navigator.clipboard.writeText(this._share.config.url);
+      .pipe(
+        switchMap(() => {
+          return this.beforeOpen ? this.beforeOpen({ platform: this.platform }) : of(null);
+        }),
+        tap((event) => {
+          const url = (event as any)?.url || this._share.config.url;
 
-      } else if (this._share.getMethod() === Method.MetaRefesh) {
-        this._metaRefresh();
-
-      } else if (this._share.getMethod() === Method.Dialog) {
-        this._dialog();
-      } else if (this._share.getMethod() === Method.Href) {
-        location.href = this.href;
-      }
-    });
-  }
-
-  private _metaRefresh() {
-    const newWindow = window.open('', 'Share', 'width=1,height=1')
-    const url = this._share.createUrl().toString();
-    const html = `
-    <html>
-      <head>
-        <meta http-equiv="refresh" content="0;url=` + url + `">
-      </head>
-      <body></body>
-      <script>setTimeout(function() { window.close() }, 1000);</script>
-    </html>`
-
-    newWindow.document.open();
-    newWindow.document.write(html)
-    newWindow.document.close();
-
-    setTimeout(() => {
-      if (newWindow) {
-        newWindow.close();
-      }
-    }, 500);
+          if (this.platform === Platform.Copy) {
+            navigator.clipboard.writeText(url);
+  
+          } else if (this._share.getMethod() === Method.Dialog) {
+            this._dialog(url);
+          } else if (this._share.getMethod() === Method.Href) {
+            location.href = this.href;
+          }
+        }),
+        switchMap(() => {
+          return this.afterOpen ? this.afterOpen({ 
+            platform: this.platform, 
+          }) : of(null);
+        }),
+        takeUntil(this._destory$),
+      )
+      .subscribe();
   }
 
   public ngOnInit() {
@@ -106,8 +81,8 @@ export class FsShareComponent implements OnDestroy, OnInit {
       url: this.url,
       description: this.description,
       title: this.title,
-      image: this.image
-    }
+      image: this.image,
+    };
 
     this._share = createShare(this.platform, config);
 
@@ -122,25 +97,39 @@ export class FsShareComponent implements OnDestroy, OnInit {
     }    
   }
 
-  private _dialog() {
-    this._share.open()
-    .pipe(
-      takeUntil(this._destory$)
-    )
-    .subscribe(response => {
-      // if (this.config.success) {
-      //   this.config.success({ platform: this.platform });
-      // }
-    },
-    (error) => {
-      // if (this.config.error) {
-      //   this.config.error({ platform: this.platform, error: error });
-      // }
-    });
-  }
-
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this._destory$.next(null);
     this._destory$.complete();
+  }
+
+  private _metaRefresh() {
+    const newWindow = window.open('', 'Share', 'width=1,height=1');
+    const url = this._share.createUrl().toString();
+    const html = `
+    <html>
+      <head>
+        <meta http-equiv="refresh" content="0;url=${  url  }">
+      </head>
+      <body></body>
+      <script>setTimeout(function() { window.close() }, 1000);</script>
+    </html>`;
+
+    newWindow.document.open();
+    newWindow.document.write(html);
+    newWindow.document.close();
+
+    setTimeout(() => {
+      if (newWindow) {
+        newWindow.close();
+      }
+    }, 500);
+  }
+
+  private _dialog(url: string) {
+    this._share.open(url)
+      .pipe(
+        takeUntil(this._destory$),
+      )
+      .subscribe();
   }
 }

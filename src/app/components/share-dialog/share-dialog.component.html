@@ -1,6 +1,9 @@
-<h2 mat-dialog-title>{{shareConfig.dialogTitle || 'Share'}}</h2>
+<h2 mat-dialog-title>
+  {{ shareConfig.dialogTitle || 'Share' }}
+</h2>
 <mat-dialog-content>
-  <div class="platforms"
+  <div
+      class="platforms"
       *ngIf="buttonPlatforms.length">
     <fs-share-button
       *ngFor="let platform of buttonPlatforms"
@@ -12,24 +15,24 @@
       [description]="shareConfig.description"
       [showIcon]="true"
       [showLabel]="false"
-      [open]="open"
+      [afterOpen]="afterOpen"
       [size]="150"
       [shape]="'circle'">
     </fs-share-button>
   </div>
-
-  <div class="copy-platform"
+  <div
+      class="copy-platform"
       *ngIf="copyPlatform">
     <div class="box">
       <div class="url">
-        {{shareConfig.url}}
+        {{ shareConfig.url }}
       </div>
       <fs-share
           [platform]="Platform.Copy"
           [title]="shareConfig.title"
           [url]="shareConfig.url"
           [description]="shareConfig.description"
-          [open]="open">
+          [afterOpen]="afterOpen">
         <button
             mat-flat-button
             color="primary"
@@ -39,7 +42,6 @@
       </fs-share>
     </div>
   </div>
-
 </mat-dialog-content>
 <mat-dialog-actions>
   <button

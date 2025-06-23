@@ -1,81 +1,97 @@
 <div class="fs-row.gap-xs.wrap">
   <fs-share
-    *ngFor="let platform of platforms"
-    [platform]="platform.value"
-    [title]="config.title"
-    [url]="config.url"
-    [description]="config.description"
-    [image]="config.image"
-    [beforeOpen]="beforeOpen"
-    [open]="open">
-      <button
+      *ngFor="let platform of platforms"
+      [platform]="platform.value"
+      [title]="config.title"
+      [url]="config.url"
+      [description]="config.description"
+      [image]="config.image"
+      [beforeOpen]="beforeOpen"
+      [afterOpen]="afterOpen">
+    <button
         mat-raised-button
         color="primary">
-          Share on {{platform.value}}
-      </button>
+      Share on {{ platform.value }}
+    </button>
   </fs-share>
 </div>
-
-<br><br>
-
+<br>
+<br>
 <div class="fs-row.gap-xs.wrap">
   <mat-form-field>
+    <mat-label>
+      Shape
+    </mat-label>
     <mat-select
         [(ngModel)]="shape"
-        name="shape"
-        placeholder="Shape">
-      <mat-option value="square">Square</mat-option>
-      <mat-option value="circle">Circle</mat-option>
+        name="shape">
+      <mat-option value="square">
+        Square
+      </mat-option>
+      <mat-option value="circle">
+        Circle
+      </mat-option>
     </mat-select>
   </mat-form-field>
-
   <mat-form-field>
+    <mat-label>
+      Size
+    </mat-label>
     <input
       matInput
       [(ngModel)]="size"
-      name="size"
-      placeholder="Size">
+      name="size">
   </mat-form-field>
-
   <mat-form-field>
+    <mat-label>
+      Icon Size
+    </mat-label>
     <input
       matInput
       [(ngModel)]="iconSize"
-      name="iconSize"
-      placeholder="Icon Size">
+      name="iconSize">
   </mat-form-field>
-
   <mat-form-field>
+    <mat-label>
+      Icon & Label Color
+    </mat-label>
     <input
       matInput
       [(ngModel)]="iconColor"
       name="iconColor"
-      fsColorPicker
-      placeholder="Icon & Label Color">
+      fsColorPicker>
   </mat-form-field>
-
   <mat-form-field>
+    <mat-label>
+      Show Label
+    </mat-label>
     <mat-select
         [(ngModel)]="showLabel"
-        name="showLabel"
-        placeholder="Show Label">
-      <mat-option [value]="true">Yes</mat-option>
-      <mat-option [value]="false">No</mat-option>
+        name="showLabel">
+      <mat-option [value]="true">
+        Yes
+      </mat-option>
+      <mat-option [value]="false">
+        No
+      </mat-option>
     </mat-select>
-  </mat-form-field>  
-
+  </mat-form-field>
   <mat-form-field>
+    <mat-label>
+      Show Icon
+    </mat-label>
     <mat-select
         [(ngModel)]="showIcon"
-        name="showIcon"
-        placeholder="Show Icon">
-      <mat-option [value]="true">Yes</mat-option>
-      <mat-option [value]="false">No</mat-option>
+        name="showIcon">
+      <mat-option [value]="true">
+        Yes
+      </mat-option>
+      <mat-option [value]="false">
+        No
+      </mat-option>
     </mat-select>
-  </mat-form-field>  
-
+  </mat-form-field>
 </div>
-
 <div class="fs-row.wrap">
   <fs-share-button
     [platform]="item.value"
@@ -85,7 +101,7 @@
     [size]="size"
     [description]="config.description"
     [beforeOpen]="beforeOpen"
-    [open]="open"
+    [afterOpen]="afterOpen"
     [showIcon]="showIcon"
     [color]="iconColor"
     [showLabel]="showLabel"
@@ -94,9 +110,9 @@
     *ngFor="let item of platforms">
   </fs-share-button>
 </div>
-
-<br><br><br>
-
+<br>
+<br>
+<br>
 <button
     type="button"
     (click)="openShare()"

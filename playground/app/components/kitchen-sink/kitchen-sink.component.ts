@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FsExampleComponent } from '@firestitch/example';
+
 import { FsMessage } from '@firestitch/message';
 import { Platform, Platforms } from '@firestitch/package';
+
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+
 import { ShareConfig } from 'src/app/interfaces';
 import { ShareEvent } from 'src/app/interfaces/share-event.interface';
 import { FsShareService } from 'src/app/services/share.service';
@@ -11,8 +13,8 @@ import { FsShareService } from 'src/app/services/share.service';
 
 @Component({
   selector: 'kitchen-sink',
-  templateUrl: 'kitchen-sink.component.html',
-  styleUrls: ['kitchen-sink.component.scss'],
+  templateUrl: './kitchen-sink.component.html',
+  styleUrls: ['./kitchen-sink.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KitchenSinkComponent implements OnInit {
@@ -27,7 +29,6 @@ export class KitchenSinkComponent implements OnInit {
   public showIcon = true;
 
   constructor(
-    private exampleComponent: FsExampleComponent,
     private _message: FsMessage,
     private _share: FsShareService,
   ) {
@@ -42,17 +43,17 @@ export class KitchenSinkComponent implements OnInit {
       image: 'https://www.petmd.com/sites/default/files/petmd-puppy-weight.jpg',
       description: 'Description',
       error: (event: ShareEvent) => {
-        this._message.error('Share failed - ' + event.error + ' on the ' + event.platform + ' platform');
-      }
+        this._message.error(`Share failed - ${  event.error  } on the ${  event.platform  } platform`);
+      },
     };
   }
 
-  public open = (event) => {
+  public afterOpen = (event) => {
     console.log(event);
-    if (event.platform == 'copy') {
+    if (event.platform === 'copy') {
       this._message.success('Link copied');
     } else {
-      this._message.success(event.platform + ' share opened');
+      this._message.success(`${event.platform  } share opened`);
     }
 
     return of(true)
@@ -67,10 +68,12 @@ export class KitchenSinkComponent implements OnInit {
       Platform.Facebook,
       Platform.Twitter,
     ],
-      this.config);
-  };
+    this.config);
+  }
 
   public beforeOpen = (shareEvent: ShareEvent) => {
-    return of(true);
+    return of({ 
+      url: 'https://google.com',
+    });
   };
 }

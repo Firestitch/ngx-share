@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+
 import { Platforms } from '../consts/platforms.const';
 import { Method } from '../enums/method.enum';
 import { Platform } from '../enums/platform.emun';
@@ -9,10 +10,9 @@ import { ShareConfig } from '../interfaces';
 export abstract class Share {
 
   public config: ShareConfig;
-
-  public abstract platform: Platform;
   public navigatorShare = true;
 
+  public abstract platform: Platform;
   public abstract createUrl(): URL;
   public abstract getMethod(): Method;
 
@@ -49,7 +49,7 @@ export abstract class Share {
       description: this.buildDecription(),
       title: this.buildTitle(),
       url: this.config.url,
-      image: this.config.image
+      image: this.config.image,
     };
 
     Object.keys(params)
@@ -67,14 +67,14 @@ export abstract class Share {
     return url;
   }
 
-  public open(): Observable<any> {
+  public open(url: string): Observable<any> {
     return new Observable((observer) => {
       const navigator = (window as any).navigator;
 
       const shareData = {
         title: this.config.title,
         text: this.config.description,
-        url: this.config.url,
+        url,
       };
 
       if (this.navigatorShare && isMobile() && navigator.canShare && navigator.canShare(shareData)) {
@@ -98,16 +98,16 @@ export abstract class Share {
         const top = (windowHeight - height) / 2;
 
         const options = [
-          'width=' + width,
-          'height=' + height,
-          'top=' + top,
-          'left=' + left
+          `width=${  width}`,
+          `height=${  height}`,
+          `top=${  top}`,
+          `left=${  left}`,
         ];
 
         const windowProxy = window.open(this.createUrl().toString(), '_system', options.join(','));
         if(windowProxy) {
           const timer = (<any>window).setInterval(() => {
-            if (windowProxy.closed !== false) {
+            if (windowProxy.closed) {
               window.clearInterval(timer);
               observer.next(true);
               observer.complete();
@@ -151,14 +151,14 @@ export abstract class Share {
         (<any>window).plugins.socialsharing.canShareVia(
           domain,
           'msg', null, null, null,
-          e => {
+          (e) => {
             observer.next(null);
             observer.complete();
           },
-          e => {
+          (e) => {
             observer.error();
             observer.complete();
-          }
+          },
         );
       }
     });

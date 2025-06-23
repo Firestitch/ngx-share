@@ -26,8 +26,8 @@ export class FsShareButtonComponent {
   @Input() public iconUrl = '';
   @Input() public color = '#ffffff';
   @Input() public href;
-  @Input() public beforeOpen: (shareEvent: ShareEvent) => Observable<any> | any;
-  @Input() public open: (shareEvent: ShareEvent) => Observable<any> | any;
+  @Input() public beforeOpen: (shareEvent: ShareEvent) => Observable<void|{ url: string }>;
+  @Input() public afterOpen: (event: { platform: Platform }) => Observable<any>;
   @Input() public shape: 'square' | 'circle' = 'square';
   @Input() public iconSize: number;
   @Input() public size: number;
@@ -40,6 +40,6 @@ export class FsShareButtonComponent {
         ...accum,
         [value.value]: value.name,
       };
-    }, {})
+    }, {});
   }
 }

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { Observable, of } from 'rxjs';
 
 import { Platform } from '../../enums/platform.emun';
@@ -33,16 +34,16 @@ export class ShareDialogComponent implements OnInit {
     this.copyPlatform = this._data.platforms
       .some((platform) => platform === Platform.Copy);      
 
-    this.shareConfig = this._data.shareConfig
+    this.shareConfig = this._data.shareConfig;
   }
 
   public copy(): void {   
    
   }
 
-  public open = (): Observable<any> => {
+  public afterOpen = (): Observable<any> => {
     this._dialogRef.close();
 
     return of(true);
-  }
+  };
 }
