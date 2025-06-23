@@ -5,7 +5,7 @@ import { Share } from '../share';
 
 export class MessengerShare extends Share {
 
-  public platform = Platform.Messenger
+  public platform = Platform.Messenger;
 
   public appSupported() {
     return isMobile();
@@ -15,32 +15,28 @@ export class MessengerShare extends Share {
     return false;
   }
 
-  public createUrl() {
-    if(isMobile()) {
-      return this.createMobileUrl();
-    } else {
-      return this.createDesktopUrl();
-    }
+  public createUrl(shareUrl: string) {
+    return isMobile() ? this.createMobileUrl(shareUrl) : this.createDesktopUrl(shareUrl);
   }
   
-  public createDesktopUrl() {
+  public createDesktopUrl(shareUrl: string) {
     const url = 'http://www.facebook.com/dialog/send';
     const params = {
       //app_id: '140586622674265',
       redirect_uri: window.location.href,
-      url: 'link'
+      url: 'link',
     };
   
-    return this._createUrl(url, params);
+    return this._createUrl(url, params, shareUrl);
   }
   
-  public createMobileUrl() {
+  public createMobileUrl(shareUrl: string) {
     const url = 'fb-messenger://share';
     const params = {
-      url: 'link'
+      url: 'link',
     };
 
-    return this._createUrl(url, params);
+    return this._createUrl(url, params, shareUrl);
   }
 
   public getMethod() {

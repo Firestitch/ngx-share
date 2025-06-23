@@ -12,9 +12,6 @@ export abstract class Share {
   public config: ShareConfig;
   public navigatorShare = true;
 
-  public abstract platform: Platform;
-  public abstract createUrl(): URL;
-  public abstract getMethod(): Method;
 
   constructor(
     config: ShareConfig, 
@@ -42,30 +39,6 @@ export abstract class Share {
     return this.config.title;
   }
 
-  protected _createUrl(shareUrl, params): URL {
-    const url = new URL(shareUrl);
-
-    const data = {
-      description: this.buildDecription(),
-      title: this.buildTitle(),
-      url: this.config.url,
-      image: this.config.image,
-    };
-
-    Object.keys(params)
-      .forEach((key)=> {
-        const param = params[key];
-        const value = data[key];
-
-        if (value) {
-          url.searchParams.append(param, value);
-        } else {
-          url.searchParams.append(key, param);
-        }
-      });
-
-    return url;
-  }
 
   public open(url: string): Observable<any> {
     return new Observable((observer) => {
@@ -104,7 +77,7 @@ export abstract class Share {
           `left=${  left}`,
         ];
 
-        const windowProxy = window.open(this.createUrl().toString(), '_system', options.join(','));
+        const windowProxy = window.open(this.createUrl(url).toString(), '_system', options.join(','));
         if(windowProxy) {
           const timer = (<any>window).setInterval(() => {
             if (windowProxy.closed) {
@@ -125,42 +98,35 @@ export abstract class Share {
     });
   }
 
-  protected _cordovaPlatformSupported(platform): Observable<any> {
-    return new Observable((observer) => {
+  protected _createUrl(
+    platformUrl: string,
+    params: { [key: string]: string },
+    shareUrl: string,
+  ): URL {
+    const data = {
+      description: this.buildDecription(),
+      title: this.buildTitle(),
+      url: shareUrl,
+      image: this.config.image,
+    };
 
-      if (!(<any>window).plugins) {
-        // on desktop, all share options avail.
-        observer.error();
-        observer.complete();
-      } else {
-        let domain = platform;
-        if ((<any>window).device.platform === 'iOS') {
-          if (platform === 'facebook') {
-            domain = 'com.apple.social.facebook';
-          } else if (platform === 'twitter') {
-            domain = 'com.apple.social.twitter';
-          }
-        } else if ((<any>window).device.platform === 'Android') {
-          if (platform === 'facebook') {
-            domain = 'com.facebook.katana';
-          } else if (platform === 'twitter') {
-            domain = 'com.twitter.android';
-          }
+    const url = new URL(platformUrl);
+    Object.keys(params)
+      .forEach((key)=> {
+        const param = params[key];
+        const value = data[key];
+
+        if (value) {
+          url.searchParams.append(param, value);
+        } else {
+          url.searchParams.append(key, param);
         }
+      });
 
-        (<any>window).plugins.socialsharing.canShareVia(
-          domain,
-          'msg', null, null, null,
-          (e) => {
-            observer.next(null);
-            observer.complete();
-          },
-          (e) => {
-            observer.error();
-            observer.complete();
-          },
-        );
-      }
-    });
+    return url;
   }
+
+  public abstract platform: Platform;
+  public abstract createUrl(shareUrl: string): URL;
+  public abstract getMethod(): Method;
 }

@@ -7,11 +7,11 @@ export class WhatsAppShare extends Share {
 
   public platform = Platform.WhatsApp;
 
-  public createUrl() {
+  public createUrl(shareUrl: string) {
     const url = this.isMobile() ? 'whatsapp://send' : 'https://wa.me';
     const params = { description: 'text' };
 
-    return this._createUrl(url, params);
+    return this._createUrl(url, params, shareUrl);
   }
 
   public getMethod() {

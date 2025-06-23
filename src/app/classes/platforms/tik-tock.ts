@@ -16,11 +16,11 @@ export class TikTokShare extends Share {
     return false;
   }
 
-  public createUrl() {
+  public createUrl(shareUrl: string) {
     const url = 'https://tiktok.com';
     const params = {};
 
-    return this._createUrl(url, params);
+    return this._createUrl(url, params, shareUrl);
   }
 
   public getMethod() {

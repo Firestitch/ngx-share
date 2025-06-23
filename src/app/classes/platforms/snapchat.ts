@@ -1,19 +1,19 @@
-import { Share } from '../share';
-import { Platform } from '../../enums/platform.emun';
 import { Method } from '../../enums/method.enum';
+import { Platform } from '../../enums/platform.emun';
+import { Share } from '../share';
 
 
 export class SnapchatShare extends Share {
 
   public platform = Platform.Snapchat;
 
-  public createUrl() {
+  public createUrl(shareUrl: string) {
     const url = 'https://www.snapchat.com/scan';
     const params = {
-      url: 'attachmentUrl'
+      url: 'attachmentUrl',
     };
 
-    return this._createUrl(url, params);
+    return this._createUrl(url, params, shareUrl);
   }
 
   public getMethod() {

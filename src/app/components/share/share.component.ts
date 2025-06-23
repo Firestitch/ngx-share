@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { Observable, Subject, of } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { Share } from '../../classes/share';
 import { Platforms } from '../../consts/platforms.const';
@@ -25,7 +25,7 @@ export class FsShareComponent implements OnDestroy, OnInit {
   @Input() public title = '';
   @Input() public url = '';
   @Input() public image = '';
-  @Input() public href = '';
+  @Input() public href: SafeUrl;
   @Input() public beforeOpen: (shareEvent: ShareEvent) => Observable<void|{ url: string }>;
   @Input() public afterOpen: (event: { platform: Platform }) => Observable<any>;
 
@@ -35,6 +35,7 @@ export class FsShareComponent implements OnDestroy, OnInit {
 
   private _destory$ = new Subject();
   private _share: Share;
+  private _cdRef: ChangeDetectorRef;
 
   constructor(
     private _sanitizer: DomSanitizer,
@@ -47,23 +48,23 @@ export class FsShareComponent implements OnDestroy, OnInit {
   }
 
   public click(mouseEvent: MouseEvent) {
+    if (this._share.getMethod() === Method.Href) {
+      return;
+    }
+
     mouseEvent.preventDefault();
 
     of(true)
       .pipe(
         switchMap(() => {
-          return this.beforeOpen ? this.beforeOpen({ platform: this.platform }) : of(null);
+          return this.beforeOpen$();
         }),
-        tap((event) => {
-          const url = (event as any)?.url || this._share.config.url;
-
+        tap(({ url }) => {
           if (this.platform === Platform.Copy) {
             navigator.clipboard.writeText(url);
   
           } else if (this._share.getMethod() === Method.Dialog) {
             this._dialog(url);
-          } else if (this._share.getMethod() === Method.Href) {
-            location.href = this.href;
           }
         }),
         switchMap(() => {
@@ -76,6 +77,17 @@ export class FsShareComponent implements OnDestroy, OnInit {
       .subscribe();
   }
 
+  public beforeOpen$(): Observable<{ url: string }> {
+    return (this.beforeOpen ? this.beforeOpen({ platform: this.platform }) : of(null))
+      .pipe(
+        map((event) => {
+          const url = (event as any)?.url || this._share.config.url;
+
+          return { url };
+        }),
+      );
+  }
+
   public ngOnInit() {
     const config: ShareConfig = {
       url: this.url,
@@ -85,44 +97,24 @@ export class FsShareComponent implements OnDestroy, OnInit {
     };
 
     this._share = createShare(this.platform, config);
-
-    if (this._share.getMethod() === Method.Href && !this.href) {
-      this.href = this._share.createUrl().toString();
+ 
+    if (this._share.getMethod() === Method.Href) {
+      this.beforeOpen$()
+        .pipe(
+          tap(({ url }) => {
+            const shareUrl = this._share.createUrl(url).toString();
+            this.href = this._sanitizer.bypassSecurityTrustUrl(shareUrl);
+            this._cdRef.detectChanges();
+          }),
+        )
+        .subscribe();
     }
-
-    if (this.href) {
-      this.safeHref = this._sanitizer.bypassSecurityTrustUrl(this.href);
-    } else {
-      this.href = 'javascript:;';
-    }    
+ 
   }
 
   public ngOnDestroy() {
     this._destory$.next(null);
     this._destory$.complete();
-  }
-
-  private _metaRefresh() {
-    const newWindow = window.open('', 'Share', 'width=1,height=1');
-    const url = this._share.createUrl().toString();
-    const html = `
-    <html>
-      <head>
-        <meta http-equiv="refresh" content="0;url=${  url  }">
-      </head>
-      <body></body>
-      <script>setTimeout(function() { window.close() }, 1000);</script>
-    </html>`;
-
-    newWindow.document.open();
-    newWindow.document.write(html);
-    newWindow.document.close();
-
-    setTimeout(() => {
-      if (newWindow) {
-        newWindow.close();
-      }
-    }, 500);
   }
 
   private _dialog(url: string) {

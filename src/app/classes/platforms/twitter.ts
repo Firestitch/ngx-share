@@ -1,20 +1,20 @@
-import { Share } from '../share';
-import { Platform } from '../../enums/platform.emun';
 import { Method } from '../../enums/method.enum';
+import { Platform } from '../../enums/platform.emun';
+import { Share } from '../share';
 
 
 export class TwitterShare extends Share {
 
   public platform = Platform.Twitter;
 
-  public createUrl() {
+  public createUrl(shareUrl: string) {
     const url = 'https://twitter.com/intent/tweet';
     const params = {
       url: 'url',
-      description: 'text'
+      description: 'text',
     };
 
-    return this._createUrl(url, params);
+    return this._createUrl(url, params, shareUrl);
   }
 
   public getMethod() {

@@ -16,11 +16,11 @@ export class InstagramShare extends Share {
     return false;
   }
 
-  public createUrl() {
+  public createUrl(shareUrl: string) {
     const url = 'instagram://camera';
     const params = {};
 
-    return this._createUrl(url, params);
+    return this._createUrl(url, params, shareUrl);
   }
 
   public getMethod() {
