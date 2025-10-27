@@ -2,53 +2,58 @@
   {{ shareConfig.dialogTitle || 'Share' }}
 </h2>
 <mat-dialog-content>
-  <div
+  @if (buttonPlatforms.length) {
+    <div
       class="platforms"
-      *ngIf="buttonPlatforms.length">
-    <fs-share-button
-      *ngFor="let platform of buttonPlatforms"
-      [platform]="platform"
-      [title]="shareConfig.title"
-      [url]="shareConfig.url"
-      [image]="shareConfig.image"
-      [size]="20"
-      [description]="shareConfig.description"
-      [showIcon]="true"
-      [showLabel]="false"
-      [afterOpen]="afterOpen"
-      [size]="150"
-      [shape]="'circle'">
-    </fs-share-button>
-  </div>
-  <div
+      >
+      @for (platform of buttonPlatforms; track platform) {
+        <fs-share-button
+          [platform]="platform"
+          [title]="shareConfig.title"
+          [url]="shareConfig.url"
+          [image]="shareConfig.image"
+          [size]="20"
+          [description]="shareConfig.description"
+          [showIcon]="true"
+          [showLabel]="false"
+          [afterOpen]="afterOpen"
+          [size]="150"
+          [shape]="'circle'">
+        </fs-share-button>
+      }
+    </div>
+  }
+  @if (copyPlatform) {
+    <div
       class="copy-platform"
-      *ngIf="copyPlatform">
-    <div class="box">
-      <div class="url">
-        {{ shareConfig.url }}
-      </div>
-      <fs-share
+      >
+      <div class="box">
+        <div class="url">
+          {{ shareConfig.url }}
+        </div>
+        <fs-share
           [platform]="Platform.Copy"
           [title]="shareConfig.title"
           [url]="shareConfig.url"
           [description]="shareConfig.description"
           [afterOpen]="afterOpen">
-        <button
+          <button
             mat-flat-button
             color="primary"
             type="button">
-          Copy
-        </button>
-      </fs-share>
+            Copy
+          </button>
+        </fs-share>
+      </div>
     </div>
-  </div>
+  }
 </mat-dialog-content>
 <mat-dialog-actions>
   <button
-      mat-button
-      color="primary"
-      type="button"
-      [mat-dialog-close]="undefined">
+    mat-button
+    color="primary"
+    type="button"
+    [mat-dialog-close]="undefined">
     Cancel
   </button>
 </mat-dialog-actions>

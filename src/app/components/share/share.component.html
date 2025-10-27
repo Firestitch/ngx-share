@@ -1,7 +1,8 @@
-<a
-    *ngIf="show"
+@if (show) {
+  <a
     [class]="platform"
     [href]="href"
     (click)="click($event)">
-  <ng-content></ng-content>
-</a>
+    <ng-content></ng-content>
+  </a>
+}
