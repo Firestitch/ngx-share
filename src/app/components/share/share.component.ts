@@ -14,9 +14,10 @@ import { ShareEvent } from '../../interfaces/share-event.interface';
 
 
 @Component({
-  selector: 'fs-share',
-  templateUrl: './share.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-share',
+    templateUrl: './share.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class FsShareComponent implements OnDestroy, OnInit {
 

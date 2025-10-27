@@ -9,13 +9,35 @@ import { delay } from 'rxjs/operators';
 import { ShareConfig } from 'src/app/interfaces';
 import { ShareEvent } from 'src/app/interfaces/share-event.interface';
 import { FsShareService } from 'src/app/services/share.service';
+import { FsShareComponent } from '../../../../src/app/components/share/share.component';
+import { MatButton } from '@angular/material/button';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { MatOption } from '@angular/material/core';
+import { MatInput } from '@angular/material/input';
+import { FsColorPickerModule } from '@firestitch/colorpicker';
+import { FsShareButtonComponent } from '../../../../src/app/components/share-button/share-button.component';
 
 
 @Component({
-  selector: 'kitchen-sink',
-  templateUrl: './kitchen-sink.component.html',
-  styleUrls: ['./kitchen-sink.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'kitchen-sink',
+    templateUrl: './kitchen-sink.component.html',
+    styleUrls: ['./kitchen-sink.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsShareComponent,
+        MatButton,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        FormsModule,
+        MatOption,
+        MatInput,
+        FsColorPickerModule,
+        FsShareButtonComponent,
+    ],
 })
 export class KitchenSinkComponent implements OnInit {
 

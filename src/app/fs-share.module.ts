@@ -12,23 +12,20 @@ import { FsShareService } from './services/share.service';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-
-    MatDialogModule,
-    MatButtonModule,
-  ],
-  exports: [
-    FsShareComponent,
-    FsShareButtonComponent,
-    FsShareIconComponent,
-  ],
-  declarations: [
-    FsShareComponent,
-    FsShareButtonComponent,
-    FsShareIconComponent,
-    ShareDialogComponent,
-  ],
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatButtonModule,
+        FsShareComponent,
+        FsShareButtonComponent,
+        FsShareIconComponent,
+        ShareDialogComponent,
+    ],
+    exports: [
+        FsShareComponent,
+        FsShareButtonComponent,
+        FsShareIconComponent,
+    ],
 })
 export class FsShareModule {
   static forRoot(): ModuleWithProviders<FsShareModule> {

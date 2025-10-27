@@ -5,13 +5,23 @@ import { Observable } from 'rxjs';
 import { Platforms } from '../../consts/platforms.const';
 import { Platform } from '../../enums/platform.emun';
 import { ShareEvent } from '../../interfaces/share-event.interface';
+import { FsShareComponent } from '../share/share.component';
+import { NgClass, NgStyle } from '@angular/common';
+import { FsShareIconComponent } from '../share-icon/share-icon.component';
 
 
 @Component({
-  selector: 'fs-share-button',
-  templateUrl: './share-button.component.html',
-  styleUrls: ['./share-button.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-share-button',
+    templateUrl: './share-button.component.html',
+    styleUrls: ['./share-button.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsShareComponent,
+        NgClass,
+        FsShareIconComponent,
+        NgStyle,
+    ],
 })
 export class FsShareButtonComponent {
 

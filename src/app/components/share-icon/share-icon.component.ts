@@ -19,10 +19,11 @@ import { hexToCSSFilter } from '../../models/hex-to-css-filter';
 
 
 @Component({
-  selector: 'fs-share-icon',
-  templateUrl: './share-icon.component.html',
-  styleUrls: ['./share-icon.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-share-icon',
+    templateUrl: './share-icon.component.html',
+    styleUrls: ['./share-icon.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class FsShareIconComponent implements OnInit, OnChanges, OnDestroy {
 
