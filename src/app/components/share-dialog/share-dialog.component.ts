@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 
@@ -29,6 +29,9 @@ import { MatButton } from '@angular/material/button';
     ],
 })
 export class ShareDialogComponent implements OnInit {
+  private _data = inject(MAT_DIALOG_DATA);
+  private _dialogRef = inject<MatDialogRef<ShareDialogComponent>>(MatDialogRef);
+
 
   public shareConfig: ShareConfig;
   public Platform = Platform;
@@ -36,11 +39,6 @@ export class ShareDialogComponent implements OnInit {
 
   public buttonPlatforms = [];
   public copyPlatform = false;
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) private _data: any,
-    private _dialogRef: MatDialogRef<ShareDialogComponent>,
-  ) {}
 
   public ngOnInit(): void {   
     this.buttonPlatforms = this._data.platforms

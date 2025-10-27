@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { Observable, Subject, of } from 'rxjs';
@@ -20,6 +20,8 @@ import { ShareEvent } from '../../interfaces/share-event.interface';
     standalone: true,
 })
 export class FsShareComponent implements OnDestroy, OnInit {
+  private _sanitizer = inject(DomSanitizer);
+
 
   @Input() public platform: Platform;
   @Input() public description = '';
@@ -38,9 +40,7 @@ export class FsShareComponent implements OnDestroy, OnInit {
   private _share: Share;
   private _cdRef: ChangeDetectorRef;
 
-  constructor(
-    private _sanitizer: DomSanitizer,
-  ) {
+  constructor() {
     this.platformNames = Platforms.reduce((result, value) => {
       result[value.value] = value.name;
 

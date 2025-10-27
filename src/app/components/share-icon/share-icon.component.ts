@@ -1,14 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { Subject } from 'rxjs';
@@ -26,6 +16,10 @@ import { hexToCSSFilter } from '../../models/hex-to-css-filter';
     standalone: true,
 })
 export class FsShareIconComponent implements OnInit, OnChanges, OnDestroy {
+  private _sanitizer = inject(DomSanitizer);
+  private _cdRef = inject(ChangeDetectorRef);
+  private _el = inject(ElementRef);
+
 
   @Input() public platform: Platform;
   @Input() public size: number = 20;
@@ -36,12 +30,6 @@ export class FsShareIconComponent implements OnInit, OnChanges, OnDestroy {
   public svg: SafeHtml;
 
   private _destroy$ = new Subject();
-  
-  constructor(
-    private _sanitizer: DomSanitizer,
-    private _cdRef: ChangeDetectorRef,
-    private _el: ElementRef,
-  ) {}
 
   public ngOnInit(): void {
     if(!this.color) {

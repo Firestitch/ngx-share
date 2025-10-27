@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 
 import { FsMessage } from '@firestitch/message';
 import { Platform, Platforms } from '@firestitch/package';
@@ -40,6 +40,9 @@ import { FsShareButtonComponent } from '../../../../src/app/components/share-but
     ],
 })
 export class KitchenSinkComponent implements OnInit {
+  private _message = inject(FsMessage);
+  private _share = inject(FsShareService);
+
 
   public config: ShareConfig = {};
   public platforms = Platforms;
@@ -49,12 +52,6 @@ export class KitchenSinkComponent implements OnInit {
   public iconColor = '#ffffff';
   public showLabel = true;
   public showIcon = true;
-
-  constructor(
-    private _message: FsMessage,
-    private _share: FsShareService,
-  ) {
-  }
 
   public ngOnInit() {
     const url = window.location.hostname === 'localhost' ? 'https://google.com' : window.location.toString();

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ShareDialogComponent } from '../components/share-dialog/share-dialog.component';
@@ -9,12 +9,10 @@ import { ShareConfig } from '../interfaces';
 
 @Injectable()
 export class FsShareService {
+  private _dialog = inject(MatDialog);
+
 
   private _platformNames;
-
-  constructor(  
-    private _dialog: MatDialog,
-  ) {}
   
   public get platformNames() {
 
